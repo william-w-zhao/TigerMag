@@ -7,4 +7,7 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
   margin: 20px;
+  max-width: 80%; /* Sets the maximum width to 80% */
+  margin-left: auto; /* Centers the content */
+  margin-right: auto; /* Centers the content */
 }
