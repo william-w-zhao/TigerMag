@@ -1,41 +1,31 @@
-import './Navbar.css'
-import Tiger from '../assets/Tiger.png'
-import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, loginWithGoogle } from "../auth"; 
+import Tiger from "../assets/Tiger.png";
+
+const NAV_BTN =
+  "bg-transparent border-0 outline-none shadow-none px-4 py-4 font-medium text-[1.2rem] text-black cursor-pointer hover:text-gray-600";
 
 
 const Navbar = () => {
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-    })
-    return unsub;
-  }, []);
-
   return (
     <div>
-    <nav className="navbar">
-    <div className = "navbar-inner">
+      <nav className="w-full bg-white">
+        <div className="w-full mx-auto flex justify-between items-center">
+          <div>
+            <img src={Tiger} alt="Logo" className="h-16 w-auto" />
+          </div>
 
-      <div className="navbar-logo">
-        <img src={Tiger} alt="Logo" className="navbar-logo" />
-      </div>
+          <div className="flex items-center">
+            <button className={NAV_BTN}>News</button>
+            <button className={NAV_BTN}>Opinion</button>
+            <button className={NAV_BTN}>Archives</button>
+            <button className={NAV_BTN}>Masthead</button>
+            <button className={NAV_BTN}>About</button>
+          </div>
+        </div>
+      </nav>
 
-      <div className="navbar-links">
-        <button>News</button>
-        <button>Opinion</button>
-        <button>Archives</button>
-        <button>Masthead</button>
-        <button>About</button>
-      </div>
+      <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-px mx-auto" />
     </div>
-    </nav>
-    <hr></hr>
-    </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

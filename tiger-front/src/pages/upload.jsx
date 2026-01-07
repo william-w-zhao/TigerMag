@@ -14,10 +14,14 @@ const Upload = () => {
     const [image, setImage] = useState('')
     const [status, setStatus] = useState('')
 
+    // What happens when you press submit
     const handleSubmit = async (event) => {
+        // Prevent page reload
         event.preventDefault()
+        // Print that it is saving
         setStatus("Saving...");
 
+        // Add this document to the collection titles 'articles'
         try {
             const docRef = await addDoc(collection(db, "articles"), {
                 title,
@@ -29,6 +33,7 @@ const Upload = () => {
                 createdAt: serverTimestamp(),
             })
         
+            // Clear the textarea forms
             setTitle("")
             setDescription("")
             setAuthor("")
@@ -36,41 +41,44 @@ const Upload = () => {
             setSection("")
             setImage("")
             setStatus(`Saved! id: ${docRef.id}`)}
-
-        catch (err) {
+        
+        catch (err) { // else print the error that occured
             console.error("Firestore addDoc failed:", err);
             setStatus(err?.message || "Could not save")}
     }
 
     return (
-        <div className = "UploadFrame">
+        <div>
             <Navbar></Navbar>
-            <h1>Upload Articles</h1>
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "minmax(420px, 1fr) minmax(0, 1fr)",
-                gap: "48px",
-                alignItems: "start",
-                padding: "24px",}}>
-            <form onSubmit={handleSubmit} style={{
-                 display: "flex",
-                 flexDirection: "column",
-                 width: "400px",
-                 gap: "8px"
-                 }}>
-            <label className = "UploadBox">Article Title</label>
-            <textarea rows={4} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" style={{ resize: "none" } }/>
-            <label className = "UploadBox">Article Description</label>
-            <textarea rows={4} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter description" style={{ resize: "none" }}/>
-            <label className = "UploadBox">Article Author</label>
-            <textarea rows={2} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Enter author" style={{ resize: "none" }}/>
-            <label className = "UploadBox">Article Content</label>
-            <textarea rows={4} value={content} onChange={(e) => setContent(e.target.value)} placeholder="Enter content" style={{ resize: "none" }}/>
-            <label className = "UploadBox">Section (News/Opinion)</label>
-            <textarea rows={2} value={section} onChange={(e) => setSection(e.target.value)} placeholder="Enter section" style={{ resize: "none" }}/>
-            <label className = "UploadBox">Article Image</label>
-            <textarea rows={4} value={image} onChange={(e) => setImage(e.target.value)} placeholder="Enter image" style={{ resize: "none" }}/>
-            <button type="submit">Submit</button>
+            <h1 className ="text-3xl font-bold">Upload Articles</h1>
+            <div className="
+            grid
+            grid-cols-[minmax(420px,1fr)_minmax(0,1fr)]
+            gap-12
+            items-start
+            p-6
+            ">
+            <form onSubmit={handleSubmit} className="
+                 flex
+                 flex-col
+                 w-full
+                 max-w-100
+                 gap-2"
+                 >
+            <label className = "text-xl font-bold">Upload</label>
+            <label className = "text-l">Article Title</label>
+            <textarea rows={2} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" style={{ resize: "none" }} className="form-textarea"/>
+            <label className = "text-l">Article Description</label>
+            <textarea rows={2} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter description" style={{ resize: "none" }} className="form-textarea"/>
+            <label className = "text-l">Article Author</label>
+            <textarea rows={2} value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Enter author" style={{ resize: "none" }} className="form-textarea"/>
+            <label className = "text-l">Article Content</label>
+            <textarea rows={4} value={content} onChange={(e) => setContent(e.target.value)} placeholder="Enter content" style={{ resize: "none" }} className="form-textarea"/>
+            <label className = "text-l">Section (News/Opinion)</label>
+            <textarea rows={2} value={section} onChange={(e) => setSection(e.target.value)} placeholder="Enter section" style={{ resize: "none" }} className="form-textarea"/>
+            <label className = "text-l">Article Image</label>
+            <textarea rows={2} value={image} onChange={(e) => setImage(e.target.value)} placeholder="Enter image" style={{ resize: "none" }} className="form-textarea"/>
+            <button type="submit" className="px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-50">Submit</button>
             {status && <p>{status}</p>}
         </form>
         <ArticlePreview title={title} description={description} author={author} content={content} section={section} image={image}/>

@@ -6,7 +6,7 @@ const ArticlePreview = ({title, description, author, content, section, image}) =
     wordBreak: "break-word",
     maxWidth: "100%",
   }}>
-            <label>Preview</label>
+            <label className = "text-xl font-bold">Preview</label>
             <h2>{title}</h2>
             <h3>{section} {description}</h3>
             <h3>{author}</h3>
