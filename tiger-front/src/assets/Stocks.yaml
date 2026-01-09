@@ -22,6 +22,7 @@ items:
     title: "AI-Generated Jackets"
     value: "2"
     change: "+2"
+
   - id: 5
     title: "Whitman Salmonella Rate"
     value: "0.34%"

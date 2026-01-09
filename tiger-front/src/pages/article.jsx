@@ -20,13 +20,13 @@ const Article = () => {
 
   return (
     <div>
-      <div className = "max-w-[55%] mx-auto space-y-2">
+      <div className = "max-w-[55%] mx-auto mt-4 mb-8">
         <h2 className = "text-l text-orange-400">{article.section}</h2>
         <h1 className = "italic text-4xl font-bold">{article.title}</h1>
-        <h2 className = "italic text-xl font">{article.description}</h2>
+        <h2 className = "italic text-xl text-gray-500">{article.description}</h2>
       </div>
       <div className="max-w-[55%] mx-auto">
-        <h2 className = "text-l font">By {article.author}</h2>
+        <h2 className = "text-l text-gray-500">By {article.author}</h2>
         <p className = "text-xl whitespace-pre-wrap">{article.content}</p>
       </div>
     </div>
