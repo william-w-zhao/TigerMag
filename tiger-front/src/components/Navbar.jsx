@@ -1,12 +1,15 @@
+
 import Tiger from "../assets/Tiger.png";
+import MarqueeBar from "./StockMarquee"
 
 const NAV_BTN =
-  "bg-transparent border-0 outline-none shadow-none px-4 py-4 font-medium text-[1.2rem] text-black cursor-pointer hover:text-gray-600";
+  "bg-transparent border-0 outline-none shadow-none px-4 font-medium text-[1.2rem] text-black cursor-pointer hover:underline";
 
 
 const Navbar = () => {
   return (
     <div>
+      <MarqueeBar className="pb-2"/>
       <nav className="w-full bg-white">
         <div className="w-full mx-auto flex justify-between items-center">
           <div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchArticle, updateArticle } from "../firebase/db";
+import Loading from "../components/Loading"
 import TextareaAutosize from "react-textarea-autosize";
 
 const TEXTAREA_STYLE =
@@ -10,7 +11,7 @@ const ArticleEdit = () => {
   const { id } = useParams();
 
   const [article, setArticle] = useState(null);
-  const [hasSaved, setHasSaved] = useState(false);
+  const [hasSaved, setHasSaved] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -56,7 +57,7 @@ const ArticleEdit = () => {
   };
 
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!article) return <p>Loading...</p>;
+  if (!article) return <Loading/>;
 
   return (
     <div className="max-w-[55%] mx-auto flex flex-col gap-2">
@@ -64,7 +65,7 @@ const ArticleEdit = () => {
         <button
           onClick={handleSave}
           disabled={saving || hasSaved}
-          className="hover:underline disabled:opacity-50"
+          className="enabled:hover:underline disabled:opacity-50"
         >
           {saving ? "Saving..." : hasSaved ? "Saved" : "Save"}
         </button>

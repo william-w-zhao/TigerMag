@@ -9,7 +9,7 @@ import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <div className="min-h-screen max-w-[80%] mx-auto p-5"> 
+    <div className="min-h-screen max-w-[80%] mx-auto"> 
       <BrowserRouter>
       <Navbar/>
       <Routes>

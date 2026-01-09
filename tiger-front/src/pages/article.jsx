@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchArticle } from "../firebase/db";
+import Loading from "../components/Loading"
 
 const Article = () => {
   const [article, setArticle] = useState(null);
@@ -15,7 +16,7 @@ const Article = () => {
       loadArticle()
     }, [id])
 
-  if (!article) return <p>Loading...</p>;
+  if (!article) return <Loading/>;
 
   return (
     <div>
