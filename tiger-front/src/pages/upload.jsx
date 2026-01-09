@@ -1,7 +1,6 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {useState} from 'react'
 import { db } from "../firebase/db";
-import ArticlePreview from '../components/ArticlePreview'
 import LogoutButton from "../components/LogoutButton";
 
 const Upload = () => {
@@ -79,7 +78,6 @@ const Upload = () => {
             <button type="submit" className="px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-50">Submit</button>
             {status && <p>{status}</p>}
         </form>
-        <ArticlePreview title={title} description={description} author={author} content={content} section={section} image={image}/>
       </div>
       <LogoutButton/>
     </div>

@@ -1,11 +1,11 @@
-import CardLarge from "../components/CardLarge";
-import CardMedium from "../components/CardMedium";
-import CardSmall from "../components/CardSmall";
+import CardLarge from "./CardLarge"
+import CardMedium from "./CardMedium"
+import CardSmall from "./CardSmall"
 import { useEffect, useState } from "react";
 import { db } from "../firebase/db";
 import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
-const Home = () => {
+const HomeLayout = () => {
   const DEFAULT = {
     a1: null, 
     b1: null, b2: null,
@@ -56,7 +56,7 @@ const Home = () => {
             </section>
             </div>
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-4 divide-x divide-gray-200">
                 <CardMedium articleID={layout.d1} setArticle={(id) => loadArticle("d1", id)} removeArticle={() => removeArticle("d1")}/>
                 <CardMedium articleID={layout.d2} setArticle={(id) => loadArticle("d2", id)} removeArticle={() => removeArticle("d2")}/>
                 <CardMedium articleID={layout.d3} setArticle={(id) => loadArticle("d3", id)} removeArticle={() => removeArticle("d3")}/>
@@ -66,4 +66,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomeLayout

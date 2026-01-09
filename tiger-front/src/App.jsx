@@ -23,6 +23,7 @@ function App() {
       <main className="w-full max-w-[80%] mx-auto pt-5">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/news" element={<News />} />
         <Route path="/opinion" element={<Opinion />} />
         <Route path="/archives" element={<Archives />} />
