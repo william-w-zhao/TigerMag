@@ -17,9 +17,10 @@ import Login from './pages/login';
 
 function App() {
   return (
-    <div className="min-h-screen max-w-[80%] mx-auto"> 
+    <div className="min-h-screen max-w-full mx-auto p-5"> 
       <BrowserRouter>
       <Navbar/>
+      <main className="w-full max-w-[80%] mx-auto pt-5">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
@@ -35,6 +36,7 @@ function App() {
         <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      </main>
     </BrowserRouter>
     </div>
   );
