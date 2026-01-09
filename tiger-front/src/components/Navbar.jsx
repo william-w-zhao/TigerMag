@@ -1,7 +1,5 @@
 
 import MarqueeBar from "./StockMarquee"
-import TigerLogoRectangular from "../assets/TigerLogoRectangular.png";
-import TigerLogoBox from "../assets/TigerLogoBox.png";
 import Tiger from "../assets/Tiger.png";
 import TigerLogoText from "../assets/TigerLogoText.png";
 import { useNavigate } from "react-router-dom";

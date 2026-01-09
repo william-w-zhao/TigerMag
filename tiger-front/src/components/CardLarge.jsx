@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchArticle } from "../firebase/db";
+import { Link } from "react-router-dom";
 import ArticleDropdownMenu from "./ArticleDropdownMenu";
 
 const CardLarge = ({articleID, setArticle, removeArticle, className = ''}) => {
@@ -26,6 +27,7 @@ const CardLarge = ({articleID, setArticle, removeArticle, className = ''}) => {
 
     else return (
         <div className={` relative h-full border-gray-200 p-3 ${className}`}>
+            <Link to={`/articles/${articleID}`} className="absolute inset-0 z-0"/>
             <button onClick={removeArticle} className = "absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold">
                 ×
             </button>
