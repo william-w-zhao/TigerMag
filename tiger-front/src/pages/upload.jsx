@@ -1,7 +1,6 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {useState} from 'react'
-import { db } from "../firebaseconfig";
-import Navbar from '../components/Navbar'
+import { db } from "../firebase/db";
 import ArticlePreview from '../components/ArticlePreview'
 import LogoutButton from "../components/LogoutButton";
 
@@ -49,7 +48,6 @@ const Upload = () => {
 
     return (
         <div>
-            <Navbar></Navbar>
             <h1 className ="text-3xl font-bold">Upload Articles</h1>
             <div className="
             grid
