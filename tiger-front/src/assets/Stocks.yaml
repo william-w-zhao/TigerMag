@@ -1,0 +1,28 @@
+speed: 40
+pauseOnHover: true
+direction: left
+
+items:
+  - id: 1
+    title: "Pres. Eisgruber Approval"
+    value: "48.76%"
+    change: "-3.42%"
+
+  - id: 2
+    title: "Estimated Fox Pop."
+    value: "482"
+    change: "+12"
+
+  - id: 3
+    title: "Honor Committee Integrity"
+    value: "12.08%"
+    change: "-9.2%"
+
+  - id: 4
+    title: "AI-Generated Jackets"
+    value: "2"
+    change: "+2"
+  - id: 5
+    title: "Whitman Salmonella Rate"
+    value: "0.34%"
+    change: "-0.08%"

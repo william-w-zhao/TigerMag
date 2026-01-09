@@ -1,33 +1,25 @@
-import { doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "../firebaseconfig";
-import Navbar from "../components/Navbar";
+import { fetchArticle } from "../firebase/db";
+import Loading from "../components/Loading"
 
 const Article = () => {
   const [article, setArticle] = useState(null);
   const { id } = useParams();
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      const docRef = doc(db, "articles", id);
-      const snap = await getDoc(docRef);
-
-      if (snap.exists()) {
-        setArticle(snap.data());
-      } else {
-        setArticle(null);
+    useEffect(() => {
+      const loadArticle = async () => {
+        const data = await fetchArticle(id)
+        setArticle(data)
       }
-    };
 
-    fetchArticle();
-  }, [id]);
+      loadArticle()
+    }, [id])
 
-  if (!article) return <p>Loading...</p>;
+  if (!article) return <Loading/>;
 
   return (
     <div>
-      <Navbar />
       <div className = "max-w-[55%] mx-auto space-y-2">
         <h2 className = "text-l text-orange-400">{article.section}</h2>
         <h1 className = "italic text-4xl font-bold">{article.title}</h1>

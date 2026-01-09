@@ -5,6 +5,7 @@ import { auth } from "./auth";
 
 const ALLOWED_EMAILS = new Set([
   "williamzhao08@gmail.com",
+  "fzhao03@gmail.com",
   "wz5069@princeton.edu",
 ]);
 
