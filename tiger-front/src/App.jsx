@@ -10,9 +10,7 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
-import Upload from './pages/upload';
 import EditorConsole from './pages/editor-console';
-import Staff from './pages/staff';
 import Login from './pages/login';
 import Footer from './components/Footer.jsx';
 
