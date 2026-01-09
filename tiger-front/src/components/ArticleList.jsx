@@ -14,7 +14,9 @@ const ArticleListEntry = ({ article }) => {
     return (
         <div className="flex justify-between py-1 px-2 even:bg-gray-100">
             <div className="flex-col">
-                <h1 className="italic text-2xl font-bold">{article.title}</h1>
+                <button onClick={() => {navigate(`/articles/${article.id}`)}}
+                        className="italic text-2xl font-bold hover:underline hover:text-blue-600 active:text-blue-800">{article.title}
+                </button>
                 <h2 className="italic text-lg text-gray-500">{article.description}</h2>
                 <p className="text-l text-gray-500">By {article.author}</p>
             </div>
