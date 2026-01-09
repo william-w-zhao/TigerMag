@@ -11,14 +11,14 @@ import Contact from './pages/contact';
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
 import Upload from './pages/upload';
-import Staff from './pages/staff';
 import Login from './pages/login';
 
 function App() {
   return (
-    <div className="min-h-screen max-w-[80%] mx-auto"> 
+    <div className="min-h-screen max-w-full mx-auto p-5"> 
       <BrowserRouter>
       <Navbar/>
+      <main className="w-full max-w-[80%] mx-auto pt-5">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
@@ -28,12 +28,12 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/editor" element={<ProtectedRoute><Upload /></ProtectedRoute>}/>
-        <Route path="/staff" element={<ProtectedRoute><Staff /></ProtectedRoute>}/>
         <Route path="/articles/:id" element={<Article />} />
         <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit/></ProtectedRoute>} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      </main>
     </BrowserRouter>
     </div>
   );
