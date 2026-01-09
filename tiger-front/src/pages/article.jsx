@@ -5,22 +5,33 @@ import Loading from "../components/Loading"
 
 const Article = () => {
   const [article, setArticle] = useState(null);
+  const [error, setError] = useState("");
   const { id } = useParams();
 
-    useEffect(() => {
-      const loadArticle = async () => {
-        const data = await fetchArticle(id)
-        setArticle(data)
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        setError("");
+        const data = await fetchArticle(id);
+        if (!cancelled) setArticle(data);
+      } catch (e) {
+        if (!cancelled) setError(e?.message ?? "Failed to load article");
       }
+    })();
 
-      loadArticle()
-    }, [id])
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
+  if (error) return <p className="text-red-500">{error}</p>;
   if (!article) return <Loading/>;
 
   return (
     <div>
-      <div className = "max-w-[55%] mx-auto mt-4 mb-8">
+      <div className = "max-w-[55%] mx-auto mb-8">
         <h2 className = "text-l text-orange-400">{article.section}</h2>
         <h1 className = "italic text-4xl font-bold">{article.title}</h1>
         <h2 className = "italic text-xl text-gray-500">{article.description}</h2>

@@ -15,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="mb-4">
       <MarqueeBar className="pb-2"/>
       <nav className="w-full bg-white">
         <div className="relative w-full flex items-center px-4">
