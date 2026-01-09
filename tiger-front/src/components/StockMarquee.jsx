@@ -19,7 +19,7 @@ const MarqueeComponent = ({ title, value, change }) => {
       <span className="font-bold">{title}</span>
       <span className={`font-bold ${color}`}>{value}</span>
       <span className={color}>{change}</span>
-      <Icon className={`w-4 h-4 ${color} flex-shrink-0`} />
+      <Icon className={`w-4 h-4 ${color} shrink-0`} />
     </div>
   );
 };

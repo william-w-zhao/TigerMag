@@ -1,6 +1,10 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {useState} from 'react'
+<<<<<<< HEAD
 import { db } from "../firebase/db";
+=======
+import { db } from "../firebaseconfig";
+>>>>>>> 9508fc8 (Merging)
 import ArticlePreview from '../components/ArticlePreview'
 import LogoutButton from "../components/LogoutButton";
 
