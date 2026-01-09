@@ -13,20 +13,12 @@ import ArticleEdit from './pages/article-edit';
 import Upload from './pages/upload';
 import Staff from './pages/staff';
 import Login from './pages/login';
-import Navbar from './components/Navbar'
 
 function App() {
   return (
-<<<<<<< HEAD
     <div className="min-h-screen max-w-[80%] mx-auto"> 
       <BrowserRouter>
       <Navbar/>
-=======
-    <div className="min-h-screen max-w-full mx-auto p-5"> 
-      <BrowserRouter>
-      <Navbar/>
-      <main className="w-full max-w-[80%] mx-auto pt-5">
->>>>>>> 9508fc8 (Merging)
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
@@ -42,7 +34,6 @@ function App() {
         <Route path="*" element={<h1>404 Not Found</h1>} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      </main>
     </BrowserRouter>
     </div>
   );

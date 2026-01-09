@@ -1,6 +1,6 @@
 import { addDoc, collection} from "firebase/firestore";
 import {useState} from 'react'
-import { db } from "../firebaseconfig";
+import { db } from "../firebase/db";
 import LogoutButton from "../components/LogoutButton";
 
 const Staff = () => {

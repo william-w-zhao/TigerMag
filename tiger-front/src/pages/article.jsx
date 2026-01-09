@@ -5,8 +5,7 @@ import Loading from "../components/Loading"
 
 const Article = () => {
   const [article, setArticle] = useState(null);
-  const params = useParams()
-  const id = params.id;
+  const { id } = useParams();
 
     useEffect(() => {
       const loadArticle = async () => {
@@ -21,7 +20,7 @@ const Article = () => {
 
   return (
     <div>
-      <div className = "max-w-[55%] mx-auto space-y-2">
+      <div className = "max-w-[55%] mx-auto mt-4 mb-8">
         <h2 className = "text-l text-orange-400">{article.section}</h2>
         <h1 className = "italic text-4xl font-bold">{article.title}</h1>
         <h2 className = "italic text-xl text-gray-500">{article.description}</h2>
