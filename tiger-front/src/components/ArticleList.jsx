@@ -15,17 +15,17 @@ const ArticleListEntry = ({ article }) => {
         <div className="flex justify-between pt-1 pb-2 px-2 even:bg-gray-100">
             <div className="flex-col">
                 <button onClick={() => {navigate(`/articles/${article.id}`)}}
-                        className="italic text-2xl font-bold hover:underline hover:text-blue-600 active:text-blue-800">{article.title}
+                        className="italic text-2xl font-bold hover:underline hover:cursor-pointer hover:text-blue-600 active:text-blue-800">{article.title}
                 </button>
                 <h2 className="italic text-lg text-gray-500">{article.description}</h2>
                 <p className="text-l text-gray-500">By {article.author}</p>
             </div>
             <div className="flex items-center gap-1">
                 <button onClick={() => {navigate(`/articles/${article.id}/edit`)}}>
-                    <FontAwesomeIcon className="text-gray-400 hover:text-black active:text-gray-400" icon={faPenToSquare} />
+                    <FontAwesomeIcon className="text-gray-400 hover:text-black hover:cursor-pointer active:text-gray-400" icon={faPenToSquare} />
                 </button>
                 <button>
-                    <FontAwesomeIcon className="text-gray-400 hover:text-red-400 active:text-gray-400" icon={faTrashCan} />
+                    <FontAwesomeIcon className="text-gray-400 hover:text-red-400 hover:cursor-pointer active:text-gray-400" icon={faTrashCan} />
                 </button>
             </div>
         </div>

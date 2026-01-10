@@ -24,12 +24,12 @@ const Navbar = () => {
       <nav className="w-full bg-white">
         <div className="relative w-full flex items-center px-4">
           <div className="hidden lg:flex items-center gap-2">
-            <img src={Tiger} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto" />
+            <img src={Tiger} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto hover:cursor-pointer" />
             <button className={NAV_BTN} onClick = {() => navigate('/news')}>News</button>
             <button className={NAV_BTN} onClick = {() => navigate('/opinion')}>Opinion</button>
             <button className={NAV_BTN} onClick = {() => navigate('/archives')}>Archives</button>
           </div>
-          <div className="justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2">
+          <div className="justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:cursor-pointer">
             <img src={TigerLogoText} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto" />
           </div>
           <div className="ml-auto hidden lg:flex items-center gap-2">

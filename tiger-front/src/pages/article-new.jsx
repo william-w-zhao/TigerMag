@@ -1,75 +1,52 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { fetchArticle, updateArticle } from "../firebase/db";
-import Loading from "../components/Loading"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { newArticle } from "../firebase/db"
 import TextareaAutosize from "react-textarea-autosize";
 
 const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";
 
-const ArticleEdit = () => {
-  const { id } = useParams();
+const ArticleNew = () => {
 
-  const [article, setArticle] = useState(null);
-  const [hasSaved, setHasSaved] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      try {
-        setError("");
-        const data = await fetchArticle(id);
-        if (!cancelled) setArticle(data);
-      } catch (e) {
-        if (!cancelled) setError(e?.message ?? "Failed to load article");
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
+  const navigate = useNavigate()
+  const [article, setArticle] = useState({
+      section: "",
+      title: "",
+      description: "",
+      author: "",
+      content: ""
+  });
 
   const onChangeField = (field) => (e) => {
     const value = e.target.value;
     setArticle((prev) => ({ ...(prev ?? {}), [field]: value }));
-    setHasSaved(false)
   };
 
-  const handleSave = async () => {
-    if (!id || !article) return;
+  const canSubmit =
+    article.section?.trim() &&
+    article.title?.trim() &&
+    article.description?.trim() &&
+    article.author?.trim() &&
+    article.content?.trim();
 
-    setSaving(true);
-    setError("");
-    try {
-      await updateArticle(id, article);
-    } catch (e) {
-      setError(e?.message ?? "Save failed");
-    } finally {
-      setSaving(false);
-      if (hasSaved == false){
-          setHasSaved(true)
-      }
-    }
-  };
+  const handleSubmit = async (article) => {
+      if (!canSubmit) return;
 
-  if (error) return <p className="text-red-500">{error}</p>;
-  if (!article) return <Loading/>;
+      const id = await newArticle(article)
+      navigate(`/articles/${id}`)
+  }
 
   return (
     <div className="max-w-[55%] mx-auto flex flex-col gap-2">
-      <h1 className="text-5xl font-bold">Edit Article</h1>
+      <h1 className="text-5xl font-bold">New Article</h1>
       <hr className="text-gray-300 mb-2"/>
       <div className="flex justify-end">
         <button
-          onClick={handleSave}
-          disabled={saving || hasSaved}
+          onClick={() => handleSubmit(article)}
+          disabled={!canSubmit}
           className="enabled:hover:underline enabled:hover:cursor-pointer disabled:opacity-50"
         >
-          {saving ? "Saving..." : hasSaved ? "Saved" : "Save"}
+        Publish
         </button>
       </div>
 
@@ -116,4 +93,4 @@ const ArticleEdit = () => {
   );
 };
 
-export default ArticleEdit;
+export default ArticleNew;
