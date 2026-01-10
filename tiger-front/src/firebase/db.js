@@ -1,6 +1,6 @@
 import { app } from "./firebaseconfig"
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc, getDocs } from "firebase/firestore";
 
 export const db = getFirestore(app);
 
@@ -15,12 +15,20 @@ const fetchArticle = async (id) => {
   }
 }
 
+const fetchAllArticles = async () => {
+  const snap = await getDocs(collection(db, "articles"));
+  return snap.docs.map(doc=> ({
+      id: doc.id,
+      ...doc.data()
+    }))
+}
+
 const updateArticle = async (id, data) => {
   const articleRef = doc(db, "articles", id);
   return updateDoc(articleRef, data);
 };
 
-export { fetchArticle, updateArticle }
+export { fetchArticle, fetchAllArticles, updateArticle }
 
 
 

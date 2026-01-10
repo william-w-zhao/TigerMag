@@ -10,7 +10,7 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
-import Upload from './pages/upload';
+import EditorConsole from './pages/editor-console';
 import Login from './pages/login';
 import Footer from './components/Footer.jsx';
 
@@ -30,7 +30,7 @@ function App() {
             <Route path="/masthead" element={<Masthead />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/editor" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
+            <Route path="/editor" element={<ProtectedRoute><EditorConsole/></ProtectedRoute>} />
             <Route path="/articles/:id" element={<Article />} />
             <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />

@@ -19,7 +19,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="pr-5 pl-5">
+    <div className="pr-5 pl-5 mb-4">
       <MarqueeBar className="pb-2"/>
       <nav className="w-full bg-white">
         <div className="relative w-full flex items-center px-4">
