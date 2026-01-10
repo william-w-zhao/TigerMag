@@ -31,8 +31,9 @@ const CardSmall = ({articleID, setArticle, removeArticle, className = ''}) => {
             <button onClick={removeArticle} className = "absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold">
                 ×
             </button>
-            <div className = "flex items-end h-full">
+            <div className = "flex flex-col justify-end h-full gap-1 lg:gap-2">
                 <h1 className="text-l font-semibold">{article.title}</h1>
+                <h2 className = "text-base text-gray-500">By {article.author}</h2>
             </div>
         </div>
     )

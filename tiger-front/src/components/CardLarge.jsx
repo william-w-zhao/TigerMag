@@ -31,8 +31,12 @@ const CardLarge = ({articleID, setArticle, removeArticle, className = ''}) => {
             <button onClick={removeArticle} className = "absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold">
                 ×
             </button>
-            <div className = "flex items-end h-full">
-                <h1 className="text-3xl font-semibold justify-end">{article.title}</h1>
+            <div className = "flex flex-col justify-end h-full gap-1 lg:gap-2">
+                <h1 className="relative inline-block text-3xl font-semibold group">
+                    <span className="relative z-10">{article.title}</span>
+                    <span className="absolute left-0 bottom-0 w-full h-2.5 bg-orange-300 origin-bottom scale-y-0 transition-transform duration-500 ease-out group-hover:scale-y-100"   />
+                </h1>
+                <h2 className = "text-l text-gray-500">By {article.author}</h2>
             </div>
         </div>
     )

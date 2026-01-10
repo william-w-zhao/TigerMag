@@ -40,7 +40,7 @@ const Home = () => {
     return (
         <div className="min-h-screen">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] items-stretch gap-3">
-            <section className="order-1 lg:order-2 h-full lg:border-l lg:border-r lg:border-gray-200 lg:pl-4 bg-white">
+            <section className="order-1 lg:order-2 h-full lg:border-l lg:border-r lg:border-gray-200 lg:px-4 bg-white">
                 <CardLarge articleID={layout.a1} setArticle={(id) => loadArticle("a1", id)} removeArticle={() => removeArticle("a1")}/>
             </section>
             <section className="order-2 lg:order-1 h-full flex flex-col divide-y divide-gray-200">
@@ -56,11 +56,20 @@ const Home = () => {
             </section>
             </div>
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-6">
                 <CardMedium articleID={layout.d1} setArticle={(id) => loadArticle("d1", id)} removeArticle={() => removeArticle("d1")}/>
+                    <div className="hidden lg:block w-px bg-gray-200" />
                 <CardMedium articleID={layout.d2} setArticle={(id) => loadArticle("d2", id)} removeArticle={() => removeArticle("d2")}/>
+                    <div className="hidden lg:block w-px bg-gray-200" />
                 <CardMedium articleID={layout.d3} setArticle={(id) => loadArticle("d3", id)} removeArticle={() => removeArticle("d3")}/>
+                    <div className="hidden lg:block w-px bg-gray-200" />
                 <CardMedium articleID={layout.d4} setArticle={(id) => loadArticle("d4", id)} removeArticle={() => removeArticle("d4")}/>
+            </div>
+            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6">
+                <CardMedium articleID={layout.e1} setArticle={(id) => loadArticle("e1", id)} removeArticle={() => removeArticle("e1")}/>
+                    <div className="hidden lg:block w-px bg-gray-200" />
+                <CardMedium articleID={layout.e2} setArticle={(id) => loadArticle("e2", id)} removeArticle={() => removeArticle("e2")}/>
             </div>
         </div>
     )

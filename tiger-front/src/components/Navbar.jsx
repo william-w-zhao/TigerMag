@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FaInstagram } from "react-icons/fa";
 
 const NAV_BTN =
-  "bg-transparent border-0 outline-none shadow-none px-4 font-medium text-[1.2rem] text-black cursor-pointer hover:underline";
+  "bg-transparent border-0 outline-none shadow-none px-4 font-medium text-[1.2rem] text-black cursor-pointer hover:text-orange-400 transition-colors duration-300";
 
 const Navbar = () => {
 
