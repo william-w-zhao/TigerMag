@@ -12,31 +12,35 @@ import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
 import Upload from './pages/upload';
 import Login from './pages/login';
+import Footer from './components/Footer.jsx';
 
 function App() {
   return (
-    <div className="min-h-screen max-w-full mx-auto p-5"> 
-      <BrowserRouter>
-      <Navbar/>
-      <main className="w-full max-w-[80%] mx-auto pt-5">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/opinion" element={<Opinion />} />
-        <Route path="/archives" element={<Archives />} />
-        <Route path="/masthead" element={<Masthead />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/editor" element={<ProtectedRoute><Upload /></ProtectedRoute>}/>
-        <Route path="/articles/:id" element={<Article />} />
-        <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit/></ProtectedRoute>} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      </main>
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+
+        <main className="flex-1 w-full max-w-[90%] lg:max-w-[80%] mx-auto pt-5 pb-5">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/opinion" element={<Opinion />} />
+            <Route path="/archives" element={<Archives />} />
+            <Route path="/masthead" element={<Masthead />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/editor" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
+            <Route path="/articles/:id" element={<Article />} />
+            <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<h1>404 Not Found</h1>} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </BrowserRouter>
-    </div>
   );
 }
 
