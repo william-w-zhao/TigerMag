@@ -12,7 +12,7 @@ const ArticleListEntry = ({ article }) => {
     const navigate = useNavigate()
 
     return (
-        <div className="flex justify-between py-1 px-2 even:bg-gray-100">
+        <div className="flex justify-between pt-1 pb-2 px-2 even:bg-gray-100">
             <div className="flex-col">
                 <button onClick={() => {navigate(`/articles/${article.id}`)}}
                         className="italic text-2xl font-bold hover:underline hover:text-blue-600 active:text-blue-800">{article.title}
