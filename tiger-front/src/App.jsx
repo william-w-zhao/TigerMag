@@ -13,6 +13,7 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
+import ArticleNew from './pages/article-new';
 import EditorConsole from './pages/editor-console';
 import Login from './pages/login';
 import Footer from './components/Footer.jsx';
@@ -38,7 +39,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/editor" element={<ProtectedRoute><EditorConsole/></ProtectedRoute>} />
             <Route path="/articles/:id" element={<Article />} />
-            <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit/></ProtectedRoute>} />
+            <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
+            <Route path="/article-new" element={<ProtectedRoute><ArticleNew /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>

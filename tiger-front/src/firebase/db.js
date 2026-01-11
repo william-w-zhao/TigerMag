@@ -1,6 +1,16 @@
 import { app } from "./firebaseconfig"
 import { getFirestore } from "firebase/firestore";
-import { collection, doc, getDoc, updateDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  addDoc,
+  serverTimestamp,
+  deleteDoc
+} from "firebase/firestore";
+
 
 export const db = getFirestore(app);
 
@@ -28,7 +38,22 @@ const updateArticle = async (id, data) => {
   return updateDoc(articleRef, data);
 };
 
-export { fetchArticle, fetchAllArticles, updateArticle }
+
+const newArticle = async (article) => {
+
+    const docRef = await addDoc(collection(db, "articles"), {
+        ...article,
+        createdAt: serverTimestamp()})
+
+    return docRef.id
+}
+
+const deleteArticle = async (id) => {
+  const articleRef = doc(db, "articles", id);
+  return deleteDoc(articleRef);
+};
+
+export { fetchArticle, fetchAllArticles, updateArticle, newArticle, deleteArticle}
 
 
 

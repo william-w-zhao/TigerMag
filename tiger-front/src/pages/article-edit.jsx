@@ -61,18 +61,19 @@ const ArticleEdit = () => {
 
   return (
     <div className="max-w-[55%] mx-auto flex flex-col gap-2">
+      <h1 className="text-5xl font-bold">Edit Article</h1>
+      <hr className="text-gray-300 mb-2"/>
       <div className="flex justify-end">
         <button
           onClick={handleSave}
           disabled={saving || hasSaved}
-          className="enabled:hover:underline disabled:opacity-50"
+          className="enabled:hover:underline enabled:hover:cursor-pointer disabled:opacity-50"
         >
           {saving ? "Saving..." : hasSaved ? "Saved" : "Save"}
         </button>
       </div>
 
       <TextareaAutosize
-        rows={1}
         placeholder="Section"
         className={`${TEXTAREA_STYLE} text-lg text-orange-400`}
         value={article.section ?? ""}
