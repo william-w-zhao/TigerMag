@@ -1,9 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Navbar from './components/Navbar';
 import Home from './pages/home';
+import HomeEdit from './pages/home-edit.jsx';
 import News from './pages/News';
+import NewsEdit from './pages/news-edit.jsx';
 import Opinion from './pages/opinion';
+import OpinionEdit from './pages/opinion-edit.jsx';
 import Archives from './pages/archives';
 import Masthead from './pages/masthead';
 import About from './pages/about';
@@ -24,15 +27,18 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/home/edit" element={<ProtectedRoute><HomeEdit/></ProtectedRoute>} />
             <Route path="/news" element={<News />} />
+            <Route path="/news/edit" element={<ProtectedRoute><NewsEdit/></ProtectedRoute>} />
             <Route path="/opinion" element={<Opinion />} />
+            <Route path="/opinion/edit" element={<ProtectedRoute><OpinionEdit/></ProtectedRoute>} />
             <Route path="/archives" element={<Archives />} />
             <Route path="/masthead" element={<Masthead />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/editor" element={<ProtectedRoute><EditorConsole/></ProtectedRoute>} />
             <Route path="/articles/:id" element={<Article />} />
-            <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
+            <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit/></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>

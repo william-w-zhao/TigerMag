@@ -1,4 +1,4 @@
-import { logout } from "../auth";
+import { logout } from "../firebase/auth";
 
 const LogoutButton = () => {
 
