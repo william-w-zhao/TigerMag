@@ -3,7 +3,7 @@ import { fetchArticle } from "../firebase/db";
 import { Link } from "react-router-dom";
 import ArticleDropdownMenu from "./ArticleDropdownMenu";
 
-const CardSmall = ({articleID, setArticle, removeArticle, className = ''}) => {
+const CardSmall = ({articleID, setArticle, removeArticle, editMode, className = ''}) => {
     const [article, getArticle] = useState(null)
 
     useEffect(() => {
@@ -21,16 +21,17 @@ const CardSmall = ({articleID, setArticle, removeArticle, className = ''}) => {
 
     if (!article) return (
         <div className={`h-full bg-gray-50 border-2 border-gray-200 p-3 flex items-center justify-center ${className}`}>
-            <ArticleDropdownMenu value={articleID ?? ""} onSelect={setArticle}/>
+            {editMode && (<ArticleDropdownMenu value={articleID ?? ""} onSelect={setArticle}/>)}
         </div>
     )
 
     else return (
         <div className={` relative h-full border-gray-200 p-3 ${className}`}>
             <Link to={`/articles/${articleID}`} className="absolute inset-0 z-0"></Link>
+            {editMode && (
             <button onClick={removeArticle} className = "absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold">
                 ×
-            </button>
+            </button>)}
             <div className = "flex flex-col justify-end h-full gap-1 lg:gap-2">
                 <h1 className="text-l font-semibold">{article.title}</h1>
                 <h2 className = "text-base text-gray-500">By {article.author}</h2>

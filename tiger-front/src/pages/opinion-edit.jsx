@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/db";
 import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
-const News = () => {
+const OpinionEdit = () => {
   const DEFAULT = {
     a1: null, a2: null, a3: null, a4: null,
     b1: null, b2: null, b3: null, b4: null, b5: null, b6: null, b7: null, b8: null, b9: null, b10: null
   }
 
-  const editMode = false; 
+  const editMode = true; 
 
   const [layout, setLayout] = useState(DEFAULT)
   const [loading, setLoading] = useState(true)
@@ -20,7 +20,7 @@ const News = () => {
   useEffect(() => {
     const loadLayout = async () => {
       try {
-        const data = await getDoc(doc(db, "layouts", "news"))
+        const data = await getDoc(doc(db, "layouts", "opinion"))
         if (data.exists()) setLayout((existing) => ({ ...existing, ...data.data() }))
       }
       catch (e) {
@@ -36,7 +36,7 @@ const News = () => {
   const loadArticle = async (slot, id) => {
     setLayout((existing) => ({ ...existing, [slot]: id }))
     try {
-        await updateDoc(doc(db, "layouts", "news"), {[slot]: id})
+        await updateDoc(doc(db, "layouts", "opinion"), {[slot]: id})
     }
     catch (e) {
         console.error("Firestore write failed:", e);
@@ -44,14 +44,14 @@ const News = () => {
 
   const removeArticle = async (slot) => {
     setLayout((existing) => ({ ...existing, [slot]: null }))
-    await updateDoc(doc(db, "layouts", "news"), {[slot]: null})
+    await updateDoc(doc(db, "layouts", "opinion"), {[slot]: null})
   }
 
   if (loading) return <div style={{ padding: 24 }}><Loading/></div>
 
   return (
         <div className="min-h-screen">
-            <h1 className="text-4xl font-extrabold text-left mb-4">News</h1>
+            <h1 className="text-4xl font-extrabold text-left mb-4">Opinion</h1>
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mt-4 mb-2" />
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mb-8" />
             <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-stretch gap-3">
@@ -64,10 +64,9 @@ const News = () => {
                 <CardMedium articleID={layout.b3} setArticle={(id) => loadArticle("b3", id)} removeArticle={() => removeArticle("b3")} editMode={editMode}/>
             </section>
             </div>
-            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mt-4 mb-2" />
-            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mb-8" />
+            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
         </div>
     )
 }
 
-export default News
+export default OpinionEdit

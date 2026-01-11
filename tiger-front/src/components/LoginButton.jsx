@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, loginWithGoogle } from "../auth"; 
+import { auth, loginWithGoogle } from "../firebase/auth"; 
 
 const LoginButton = () => {
   const [loggingIn, setLoggingIn] = useState(false);
   const navigate = useNavigate();
 
+  const location = useLocation()
+
+  const from = location.state?.from?.pathname || "/editor"
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) navigate("/editor", { replace: true });
+      if (user) navigate(from, { replace: true });
     });
     return unsub;
   }, [navigate]);
