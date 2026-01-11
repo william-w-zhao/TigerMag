@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom"
 import { newArticle } from "../firebase/db"
+
 import TextareaAutosize from "react-textarea-autosize";
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 
 const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";
 
 const ArticleNew = () => {
+
+  let [isPublishOpen, setIsPublishOpen] = useState(false)
 
   const navigate = useNavigate()
   const [article, setArticle] = useState({
@@ -33,6 +37,7 @@ const ArticleNew = () => {
       if (!canSubmit) return;
 
       const id = await newArticle(article)
+      setIsPublishOpen(false)
       navigate(`/articles/${id}`)
   }
 
@@ -42,7 +47,7 @@ const ArticleNew = () => {
       <hr className="text-gray-300 mb-2"/>
       <div className="flex justify-end">
         <button
-          onClick={() => handleSubmit(article)}
+          onClick={() => setIsPublishOpen(true)}
           disabled={!canSubmit}
           className="enabled:hover:underline enabled:hover:cursor-pointer disabled:opacity-50"
         >
@@ -89,6 +94,63 @@ const ArticleNew = () => {
         value={article.content ?? ""}
         onChange={onChangeField("content")}
       />
+        <Transition appear show={isPublishOpen} as={Fragment}>
+            <Dialog
+              as="div"
+              className="relative z-50"
+              onClose={() => setIsPublishOpen(false)}
+            >
+              <TransitionChild
+                as={Fragment}
+                enter="ease-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-300"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black/50" />
+              </TransitionChild>
+
+              <div className="fixed inset-0 flex items-center justify-center p-4">
+                <TransitionChild
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <DialogPanel className="w-full max-w-lg rounded-lg bg-white p-4 shadow-lg">
+                    <DialogTitle className="font-bold text-lg">
+                      Publish article?
+                    </DialogTitle>
+
+                    <p className="mt-2">
+                      <span className="font-semibold">"{article.title}"</span> will
+                      be released for all to see. Are you suuuuuuure ur not gonna get canceled?
+                    </p>
+
+                    <div className="mt-4 flex justify-end gap-4">
+                      <button
+                        onClick={() => setIsPublishOpen(false)}
+                        className="font-semibold hover:underline hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleSubmit(article)}
+                        className="font-semibold text-green-400 hover:underline hover:cursor-pointer"
+                      >
+                        Publish!
+                      </button>
+                    </div>
+                  </DialogPanel>
+                </TransitionChild>
+              </div>
+            </Dialog>
+          </Transition>
     </div>
   );
 };
