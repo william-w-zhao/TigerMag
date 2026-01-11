@@ -8,6 +8,7 @@ import {
   updateDoc,
   addDoc,
   serverTimestamp,
+  deleteDoc
 } from "firebase/firestore";
 
 
@@ -42,12 +43,17 @@ const newArticle = async (article) => {
 
     const docRef = await addDoc(collection(db, "articles"), {
         ...article,
-        'createdAt': serverTimestamp()})
+        createdAt: serverTimestamp()})
 
     return docRef.id
 }
 
-export { fetchArticle, fetchAllArticles, updateArticle, newArticle }
+const deleteArticle = async (id) => {
+  const articleRef = doc(db, "articles", id);
+  return deleteDoc(articleRef);
+};
+
+export { fetchArticle, fetchAllArticles, updateArticle, newArticle, deleteArticle}
 
 
 
