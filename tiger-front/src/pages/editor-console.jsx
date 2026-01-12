@@ -1,8 +1,8 @@
-import ArticleList from "../components/ArticleList"
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus} from "@fortawesome/free-solid-svg-icons";
+import ArticleList from "../components/ArticleList"
 
 const EditorConsole = () => {
     const navigate = useNavigate()

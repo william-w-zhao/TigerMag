@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchArticle, updateArticle } from "../firebase/db";
-import Loading from "../components/Loading"
 import TextareaAutosize from "react-textarea-autosize";
+
+import Loading from "../components/Loading"
+import { fetchArticle, updateArticle } from "../firebase/db";
 
 const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";

@@ -1,7 +1,8 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import {useState} from 'react'
-import { db } from "../firebase/db";
+import { useState } from 'react'
+
 import LogoutButton from "../components/LogoutButton";
+import { db } from "../firebase/db";
 
 const Upload = () => {
     const [title, setTitle] = useState('')

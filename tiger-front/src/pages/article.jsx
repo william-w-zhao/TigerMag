@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchArticle } from "../firebase/db";
+
 import Loading from "../components/Loading"
+import { fetchArticle } from "../firebase/db";
 
 const Article = () => {
   const [article, setArticle] = useState(null);

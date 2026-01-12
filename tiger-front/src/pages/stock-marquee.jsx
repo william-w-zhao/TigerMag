@@ -1,7 +1,7 @@
-import { ArrowTrendingUpIcon, ArrowTrendingDownIcon } from "@heroicons/react/24/solid";
-import Marquee from "react-fast-marquee";
-import yaml from "js-yaml";
 import marqueeConfigText from "../assets/Stocks.yaml?raw";
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
+import yaml from "js-yaml";
+import Marquee from "react-fast-marquee";
 
 const marqueeConfig = yaml.load(marqueeConfigText);
 

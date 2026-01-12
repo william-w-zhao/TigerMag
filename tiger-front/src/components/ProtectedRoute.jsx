@@ -4,6 +4,7 @@ import { db } from "../firebase/db";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth } from "../firebase/auth";
+import Loading from "./Loading";
 
 const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -40,7 +41,7 @@ const ProtectedRoute = ({ children }) => {
     return userChange
   }, []);
 
-  if (authLoading || dbLoading) return <div style={{ padding: 24 }}>Loading…</div>
+  if (authLoading || dbLoading) return <div style={{ padding: 24 }}><Loading/></div>
 
   const email = (user) ? user.email : "";
   const allowed = whitelist.has(email)

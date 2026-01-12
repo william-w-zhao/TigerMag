@@ -1,9 +1,9 @@
-import { useState, Fragment } from "react";
-import { useNavigate } from "react-router-dom"
-import { newArticle } from "../firebase/db"
-
-import TextareaAutosize from "react-textarea-autosize";
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
+import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom"
+import TextareaAutosize from "react-textarea-autosize";
+
+import { newArticle } from "../firebase/db"
 
 const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";

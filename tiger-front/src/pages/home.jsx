@@ -1,9 +1,11 @@
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 import CardLarge from "../components/CardLarge";
 import CardMedium from "../components/CardMedium";
 import CardSmall from "../components/CardSmall";
-import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import { db } from "../firebase/db";
-import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
 const Home = () => {
   const DEFAULT = {
@@ -49,7 +51,7 @@ const Home = () => {
     await updateDoc(doc(db, "layouts", "home"), {[slot]: null})
   }
 
-  if (loading) return <div style={{ padding: 24 }}>Loading…</div>
+  if (loading) return <div style={{ padding: 24 }}><Loading/></div>
 
   return (
         <div className="min-h-screen">

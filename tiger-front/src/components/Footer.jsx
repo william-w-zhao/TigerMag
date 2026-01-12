@@ -1,6 +1,4 @@
-import Tiger from "../assets/Tiger.png";
 import TigerWhite from "../assets/TigerWhite.png";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -19,7 +17,7 @@ const Footer = () => {
             <div className="hidden lg:flex items-center gap-4">
                 <button className={NAV_BTN} onClick={() => navigate("/news")}>News</button>
                 <button className={NAV_BTN} onClick={() => navigate("/opinion")}>Opinion</button>
-                <button className={NAV_BTN} onClick={() => navigate("/archives")}>Archives</button>
+                <button className={NAV_BTN} onClick={() => navigate("/archive")}>Archive</button>
             </div>
         </div>
     </footer>

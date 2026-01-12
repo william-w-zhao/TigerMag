@@ -27,7 +27,7 @@ const Navbar = () => {
             <img src={Tiger} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto hover:cursor-pointer" />
             <button className={NAV_BTN} onClick = {() => navigate('/news')}>News</button>
             <button className={NAV_BTN} onClick = {() => navigate('/opinion')}>Opinion</button>
-            <button className={NAV_BTN} onClick = {() => navigate('/archives')}>Archives</button>
+            <button className={NAV_BTN} onClick = {() => navigate('/archive')}>Archive</button>
           </div>
           <div className="justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:cursor-pointer">
             <img src={TigerLogoText} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto" />
@@ -49,7 +49,7 @@ const Navbar = () => {
           <div className="flex flex-col px-4 py-3 gap-4">
             <button className={NAV_BTN} onClick = {() => go('/news')}>News</button>
             <button className={NAV_BTN} onClick = {() => go('/opinion')}>Opinion</button>
-            <button className={NAV_BTN} onClick = {() => go('/archives')}>Archives</button>
+            <button className={NAV_BTN} onClick = {() => go('/archive')}>Archive</button>
             <button className={NAV_BTN} onClick = {() => go('/masthead')}>Masthead</button>
             <button className={NAV_BTN} onClick = {() => go('/about')}>About</button>
             <button className={NAV_BTN} onClick = {() => go('/contact')}>Contact</button>

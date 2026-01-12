@@ -1,5 +1,4 @@
 import LoginButton from "../components/LoginButton";
-import Navbar from "../components/Navbar";
 
 const Login = () => {
   return (

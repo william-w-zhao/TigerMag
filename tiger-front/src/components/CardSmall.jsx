@@ -20,7 +20,7 @@ const CardSmall = ({articleID, setArticle, removeArticle, editMode, className = 
     }, [articleID])
 
     if (!article) return (
-        <div className={`h-full bg-gray-50 border-2 border-gray-200 p-3 flex items-center justify-center ${className}`}>
+        <div className={`h-full  p-3 flex items-center justify-center ${className}`}>
             {editMode && (<ArticleDropdownMenu value={articleID ?? ""} onSelect={setArticle}/>)}
         </div>
     )

@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
+    "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
     "firebase": "^12.7.0",
     "ldrs": "^1.1.9",
