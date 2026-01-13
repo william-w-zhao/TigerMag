@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FaInstagram } from "react-icons/fa";
 import { FiMenu, FiX } from "react-icons/fi";
 
+// Default text CSS for each button
 const NAV_BTN =
   "bg-transparent border-0 outline-none shadow-none px-4 font-medium text-[1.2rem] text-black cursor-pointer hover:text-orange-400 transition-colors duration-300";
 
@@ -19,17 +20,17 @@ const Navbar = () => {
   }
 
   return (
-    <div className="pr-5 pl-5 mb-4">
+    <div className="pr-5 pl-5 mb-4"> {/*Padding for the entire Navbar*/}
       <MarqueeBar className="pb-2"/>
-      <nav className="w-full bg-white">
-        <div className="relative w-full flex items-center px-4">
-          <div className="hidden lg:flex items-center gap-2">
+      <nav className="w-full bg-white"> {/*Background for the Navbar*/}
+        <div className="relative w-full flex items-center px-4"> {/*Everything inside should be relative to the boundary*/}
+          <div className="hidden lg:flex items-center gap-2"> {/*Only displayed on larger screens*/}
             <img src={Tiger} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto hover:cursor-pointer" />
             <button className={NAV_BTN} onClick = {() => navigate('/news')}>News</button>
             <button className={NAV_BTN} onClick = {() => navigate('/opinion')}>Opinion</button>
             <button className={NAV_BTN} onClick = {() => navigate('/archive')}>Archive</button>
           </div>
-          <div className="justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:cursor-pointer">
+          <div className="justify-self-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 hover:cursor-pointer"> 
             <img src={TigerLogoText} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto" />
           </div>
           <div className="ml-auto hidden lg:flex items-center gap-2">
@@ -40,7 +41,7 @@ const Navbar = () => {
             <FaInstagram size={25} />
             </a>
           </div>
-          <button onClick={() => setOpen(existing => !existing)} className="ml-auto lg:hidden">
+          <button onClick={() => setOpen(existing => !existing)} className="ml-auto lg:hidden"> {/*Open the menu on mobile screens*/}
             {open ? <FiX size={26} /> : <FiMenu size={26} />}
           </button>
         </div>

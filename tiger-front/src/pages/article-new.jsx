@@ -2,6 +2,7 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import TextareaAutosize from "react-textarea-autosize";
+import { getStorage, ref, uploadBytes } from "firebase/storage"
 
 import { newArticle } from "../firebase/db"
 
@@ -9,10 +10,11 @@ const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";
 
 const ArticleNew = () => {
-
   let [isPublishOpen, setIsPublishOpen] = useState(false)
 
   const navigate = useNavigate()
+  const storage = getStorage()
+  
   const [article, setArticle] = useState({
       section: "",
       title: "",
@@ -20,6 +22,7 @@ const ArticleNew = () => {
       author: "",
       content: ""
   });
+  const [image, setImage] = useState(null)
 
   const onChangeField = (field) => (e) => {
     const value = e.target.value;
@@ -35,8 +38,11 @@ const ArticleNew = () => {
 
   const handleSubmit = async (article) => {
       if (!canSubmit) return;
+      if (image == null) return;
 
       const id = await newArticle(article)
+      const imageRef = ref(storage, `images/${id}`)
+      uploadBytes(imageRef, image)
       setIsPublishOpen(false)
       navigate(`/articles/${id}`)
   }
@@ -56,7 +62,7 @@ const ArticleNew = () => {
       </div>
 
       <TextareaAutosize
-        placeholder="Section"
+        placeholder="Section (NEWS/OPINION)"
         className={`${TEXTAREA_STYLE} text-lg text-orange-400`}
         value={article.section ?? ""}
         onChange={onChangeField("section")}
@@ -75,6 +81,14 @@ const ArticleNew = () => {
         value={article.description ?? ""}
         onChange={onChangeField("description")}
       />
+
+      <div className="TEXTAREA_STYLE">
+        <input 
+        type="file"
+        className=""
+        onChange={(event) => (setImage(event.target.files[0]))}>
+        </input>
+      </div>
 
       <div className="w-full flex items-center gap-2">
         <h2 className="text-lg">By</h2>

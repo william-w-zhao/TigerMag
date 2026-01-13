@@ -5,16 +5,18 @@ import { collection, getDocs } from "firebase/firestore";
 const ArticleDropdownMenu = ({ value, onSelect }) => {
   const [articles, setArticles] = useState([]);
 
+  // On first rendering, get all the articles
   useEffect(() => {
-    const fetchArticles = async () => {
+    const loadArticles = async () => {
       const data = await getDocs(collection(db, "articles"));
       const docs = data.docs.map(doc => ({id: doc.id, ...doc.data()}))
       setArticles(docs);
     };
 
-    fetchArticles();
+    loadArticles();
   }, []);
 
+  // On selection, display the selected value
   const handleChange = (event) => {
     onSelect?.(event.target.value)
   };

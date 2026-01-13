@@ -28,7 +28,7 @@ const MarqueeBar = () => {
       direction={marqueeConfig.direction}
     >
       <div className="flex gap-8 px-4">
-        {marqueeConfig.items.map(item => (
+        {(marqueeConfig?.items ?? []).map(item => (
           <MarqueeComponent key={item.id} {...item} />
         ))}
       </div>

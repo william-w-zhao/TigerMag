@@ -4,10 +4,19 @@ import { ArrowTrendingUpIcon, ArrowTrendingDownIcon } from '@heroicons/react/24/
 import Marquee from "react-fast-marquee";
 import yaml from "js-yaml";
 
+import stocksYamlUrl from "../assets/Stocks.yaml?url";
+
+
 async function loadMarqueeConfig() {
-  const res = await fetch("/src/assets/Stocks.yaml");
+  const res = await fetch(stocksYamlUrl);
   const text = await res.text();
-  return yaml.load(text);
+  const parsed = yaml.load(text);
+  return {
+    speed: parsed?.speed ?? 50,
+    pauseOnHover: parsed?.pauseOnHover ?? true,
+    direction: parsed?.direction ?? "left",
+    items: Array.isArray(parsed?.items) ? parsed.items : []
+  }
 }
 
 const MarqueeComponent = ({ title, value, change }) => {
@@ -42,7 +51,7 @@ const MarqueeBar = () => {
       className="h-8"
     >
     <div className="flex items-center gap-8 px-4 whitespace-nowrap">
-      {config.items.map(item => (
+      {(config?.items ?? []).map(item => (
         <MarqueeComponent key={item.id} {...item} />
       ))}
     </div>

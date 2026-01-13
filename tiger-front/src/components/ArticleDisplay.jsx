@@ -3,19 +3,23 @@ import { Link } from "react-router-dom";
 import { fetchAllArticles } from "../firebase/db";
 import Loading from "../components/Loading";
 
+// Display one article entry
 const ArticleListEntry = ({ article, className = ''}) => {
   const dateObject = article.createdAt.toDate()
 
+  // Set the format of the date
   const options = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     timeZone: 'UTC' 
   };
+  // Put the date in the correct format and in the American language/order
   const formattedDate = dateObject.toLocaleDateString('en-US', options);
 
+  // Return the box for each individual article
   return (
-    <div className={` relative h-full pt-3 pb-3 grid grid-cols-1 lg:grid-cols-[1fr_3fr] ${className}`}>
+    <div className={` relative h-full pt-3 pb-3 grid lg:grid-cols-[1fr_3fr] ${className}`}>
             <Link to={`/articles/${article.id}`} className="absolute inset-0 z-0"/>
             <div>
                 <h2 className = "text-l text-gray-500">{formattedDate}</h2>
@@ -29,6 +33,7 @@ const ArticleListEntry = ({ article, className = ''}) => {
   );
 };
 
+// Display the full article list
 const ArticleDisplay = ( {section} ) => {
   const [articles, setArticles] = useState(null);
   const [error, setError] = useState("");
@@ -39,15 +44,17 @@ const ArticleDisplay = ( {section} ) => {
     (async () => {
       try {
         setError("");
+        // Get all the articles
         let data = await fetchAllArticles();
 
+        // Sort the articles by their creation date, latest to earliest
         data.sort((a, b) => {
         const aTime = a.createdAt.toMillis?.() ?? 0;
         const bTime = b.createdAt.toMillis?.() ?? 0;
         return bTime - aTime;
         });
-
-        data
+        
+        // If the section is not ALL, filter the data to only display that specific section
         if (section !== "ALL") {data = data.filter((article) => (article.section === section))}
         if (!cancelled) setArticles(data);
       } catch (e) {

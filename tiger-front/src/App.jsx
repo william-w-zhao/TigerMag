@@ -25,7 +25,7 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <Navbar />
 
-        <main className="flex-1 w-full max-w-[90%] lg:max-w-[80%] mx-auto pt-5 pb-5">
+        <main className="flex-1 w-full max-w-[90%] lg:max-w-[80%] mx-auto pt-3 pb-5">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
@@ -46,7 +46,6 @@ function App() {
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>
         </main>
-
         <Footer />
       </div>
     </BrowserRouter>
