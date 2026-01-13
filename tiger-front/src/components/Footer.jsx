@@ -9,20 +9,24 @@ const Footer = () => {
         <div>
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-px mx-auto" />
             <footer className="bg-black">
-            <div className="mx-auto py-2 flex justify-between items-center lg:w-4/5">
-            <div className="flex items-center gap-4">
-                <img src={TigerWhite} alt="Logo" onClick={() => navigate("/")} className="h-8 w-auto cursor-pointer"/>
-                <h2 className="px-4 text-base font-medium text-white hover:text-orange-400 transition-colors duration-300">Weather in Princeton: 80°F  ☀️  Sunny</h2>
+            <div className="mx-auto py-2 lg:w-4/5">
+                <div className="grid items-center gap-3 lg:grid-cols-2">
+                    <div className="flex items-center justify-center lg:justify-start gap-4">
+                        <img src={TigerWhite} alt="Logo" onClick={() => navigate("/")} className="h-8 w-auto cursor-pointer"/>
+                        <h2 className="px-4 text-base font-medium text-white hover:text-orange-400 transition-colors duration-300 text-center lg:text-left">
+                            Weather in Princeton: 80°F ☀️ Sunny
+                        </h2>
+                    </div>
+                    <div className="hidden lg:flex items-center justify-end gap-4">
+                        <button className={NAV_BTN} onClick={() => navigate("/news")}>News</button>
+                        <button className={NAV_BTN} onClick={() => navigate("/opinion")}>Opinion</button>
+                        <button className={NAV_BTN} onClick={() => navigate("/archive")}>Archive</button>
+                    </div>
+                </div>
             </div>
-            <div className="hidden lg:flex items-center gap-4">
-                <button className={NAV_BTN} onClick={() => navigate("/news")}>News</button>
-                <button className={NAV_BTN} onClick={() => navigate("/opinion")}>Opinion</button>
-                <button className={NAV_BTN} onClick={() => navigate("/archive")}>Archive</button>
-            </div>
+            </footer>
         </div>
-    </footer>
-  </div>
-);
+    );
 }
 
 export default Footer

@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchAllArticles } from "../firebase/db";
+import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import Loading from "../components/Loading";
 
 // Display one article entry
 const ArticleListEntry = ({ article, className = ''}) => {
   const dateObject = article.createdAt.toDate()
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const storage = getStorage()
 
   // Set the format of the date
   const options = {
@@ -17,19 +21,64 @@ const ArticleListEntry = ({ article, className = ''}) => {
   // Put the date in the correct format and in the American language/order
   const formattedDate = dateObject.toLocaleDateString('en-US', options);
 
+  useEffect(() => {
+        if (!article.id) return; 
+        let cancelled = false;
+    
+        const options = [
+          `images/${article.id}`,
+          `images/${article.id}.jpg`,
+          `images/${article.id}.png`,
+          `images/${article.id}.jpeg`
+        ];
+    
+        (async () => {
+          for (const option of options) {
+          try {
+          const url = await getDownloadURL(ref(storage, option))
+          console.log("Got download URL:", url);
+          if (!cancelled) setImageUrl(url)
+          return
+          }
+          catch (e) {
+            if (e?.code === "storage/object-not-found") continue
+            else break
+          }}
+    
+        if (!cancelled) setImageUrl(null);
+        })();
+        return () => {
+          cancelled = true;
+        };
+      }, [article.id, storage])
+
   // Return the box for each individual article
   return (
-    <div className={` relative h-full pt-3 pb-3 grid lg:grid-cols-[1fr_3fr] ${className}`}>
-            <Link to={`/articles/${article.id}`} className="absolute inset-0 z-0"/>
-            <div>
-                <h2 className = "text-l text-gray-500">{formattedDate}</h2>
-            </div>
-            <div className = "flex flex-col justify-end h-full">
-                <h1 className="text-xl font-semibold justify-end">{article.title}</h1>
-                <h2 className="italic text-lg text-gray-500 leading-tight">{article.description}</h2>
-                <h2 className = "text-l text-gray-500">By {article.author}</h2>
-            </div>
+    <div className={`relative h-full pt-3 pb-3 ${className}`}>
+    <Link to={`/articles/${article.id}`} className="block h-full">
+      <div className="lg:grid grid-cols-[7.5rem_1fr_auto] gap-4 items-start h-full">
+      
+        <div className="hidden lg:block text-l text-gray-500 leading-tight">
+          {formattedDate}
         </div>
+
+        <div className="min-w-0">
+          <h1 className="text-xl font-semibold line-clamp-2">{article.title}</h1>
+          <h2 className="italic text-lg text-gray-500 leading-tight line-clamp-2">
+            {article.description}
+          </h2>
+          <h2 className="text-l text-gray-500">By {article.author}</h2>
+        </div>
+
+      {imageUrl && (
+        <div className="hidden lg:flex justify-end">
+          <div className="shrink-0 w-20 h-20 overflow-hidden rounded">
+            <img src={imageUrl} alt={article.title} className="w-full h-full object-cover object-center"/>
+          </div>
+        </div> )}
+      </div>
+    </Link>
+  </div>
   );
 };
 

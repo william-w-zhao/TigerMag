@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import CardLarge from "../components/CardLarge";
 import CardMedium from "../components/CardMedium";
+import CardMediumSmall from "../components/CardMediumSmall";
 import CardSmall from "../components/CardSmall";
 import Loading from "../components/Loading";
 import { db } from "../firebase/db";
@@ -56,14 +57,14 @@ const Home = () => {
   return (
         <div className="min-h-screen">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] items-stretch gap-3">
-            <section className="order-1 lg:order-2 h-full lg:border-l lg:border-r lg:border-gray-200 lg:px-4 bg-white">
+            <section className="hidden lg:block lg:order-2 h-full lg:border-l lg:border-r lg:border-gray-200 lg:px-4 bg-white">
                 <CardLarge articleID={layout.a1} setArticle={(id) => loadArticle("a1", id)} removeArticle={() => removeArticle("a1")} editMode={editMode}/>
             </section>
-            <section className="order-2 lg:order-1 h-full flex flex-col divide-y divide-gray-200">
+            <section className="hidden lg:flex lg:order-1 h-full flex-col divide-y divide-gray-200">
                 <CardMedium articleID={layout.b1} setArticle={(id) => loadArticle("b1", id)} removeArticle={() => removeArticle("b1")} editMode={editMode}/>
                 <CardMedium articleID={layout.b2} setArticle={(id) => loadArticle("b2", id)} removeArticle={() => removeArticle("b2")} editMode={editMode}/>
             </section>
-            <section className="order-3 lg:order-3 h-full flex flex-col divide-y divide-gray-200">
+            <section className="hidden lg:flex order-3 lg:order-3 h-full flex-col divide-y divide-gray-200">
                 <CardSmall articleID={layout.c1} setArticle={(id) => loadArticle("c1", id)} removeArticle={() => removeArticle("c1")} editMode={editMode}/>
                 <CardSmall articleID={layout.c2} setArticle={(id) => loadArticle("c2", id)} removeArticle={() => removeArticle("c2")} editMode={editMode}/>
                 <CardSmall articleID={layout.c3} setArticle={(id) => loadArticle("c3", id)} removeArticle={() => removeArticle("c3")} editMode={editMode}/>
@@ -71,8 +72,8 @@ const Home = () => {
                 <CardSmall articleID={layout.c5} setArticle={(id) => loadArticle("c5", id)} removeArticle={() => removeArticle("c5")} editMode={editMode}/>
             </section>
             </div>
-            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-6">
+            <hr className="hidden lg:block h-[1.5px] w-full border-0 bg-[#DEDEDE] my-6" />
+            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-6">
                 <CardMedium articleID={layout.d1} setArticle={(id) => loadArticle("d1", id)} removeArticle={() => removeArticle("d1")} editMode={editMode}/>
                     <div className="hidden lg:block w-px bg-gray-200" />
                 <CardMedium articleID={layout.d2} setArticle={(id) => loadArticle("d2", id)} removeArticle={() => removeArticle("d2")} editMode={editMode}/>
@@ -81,12 +82,30 @@ const Home = () => {
                     <div className="hidden lg:block w-px bg-gray-200" />
                 <CardMedium articleID={layout.d4} setArticle={(id) => loadArticle("d4", id)} removeArticle={() => removeArticle("d4")} editMode={editMode}/>
             </div>
-            <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] my-8" />
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6">
-                <CardMedium articleID={layout.e1} setArticle={(id) => loadArticle("e1", id)} removeArticle={() => removeArticle("e1")} editMode={editMode}/>
+            <hr className="hidden lg:block h-[1.5px] w-full border-0 bg-[#DEDEDE] my-6" />
+            <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] gap-6">
+                <CardMediumSmall articleID={layout.e1} setArticle={(id) => loadArticle("e1", id)} removeArticle={() => removeArticle("e1")} editMode={editMode}/>
                     <div className="hidden lg:block w-px bg-gray-200" />
-                <CardMedium articleID={layout.e2} setArticle={(id) => loadArticle("e2", id)} removeArticle={() => removeArticle("e2")} editMode={editMode}/>
+                <CardMediumSmall articleID={layout.e2} setArticle={(id) => loadArticle("e2", id)} removeArticle={() => removeArticle("e2")} editMode={editMode}/>
             </div>
+
+            <section className="order-1 h-full divide-y divide-gray-200 bg-white lg:hidden">
+                <CardMedium articleID={layout.a1} setArticle={(id) => loadArticle("a1", id)} removeArticle={() => removeArticle("a1")} editMode={editMode}/>
+                <CardMedium articleID={layout.b1} setArticle={(id) => loadArticle("b1", id)} removeArticle={() => removeArticle("b1")} editMode={editMode}/>
+                <CardMedium articleID={layout.b2} setArticle={(id) => loadArticle("b2", id)} removeArticle={() => removeArticle("b2")} editMode={editMode}/>
+                <CardMedium articleID={layout.b3} setArticle={(id) => loadArticle("b3", id)} removeArticle={() => removeArticle("b3")} editMode={editMode}/>
+                <CardMedium articleID={layout.c1} setArticle={(id) => loadArticle("c1", id)} removeArticle={() => removeArticle("c1")} editMode={editMode}/>
+                <CardMedium articleID={layout.c2} setArticle={(id) => loadArticle("c2", id)} removeArticle={() => removeArticle("c2")} editMode={editMode}/>
+                <CardMedium articleID={layout.c3} setArticle={(id) => loadArticle("c3", id)} removeArticle={() => removeArticle("c3")} editMode={editMode}/>
+                <CardMedium articleID={layout.c4} setArticle={(id) => loadArticle("c4", id)} removeArticle={() => removeArticle("c4")} editMode={editMode}/>
+                <CardMedium articleID={layout.c5} setArticle={(id) => loadArticle("c5", id)} removeArticle={() => removeArticle("c5")} editMode={editMode}/>
+                <CardMedium articleID={layout.d1} setArticle={(id) => loadArticle("d1", id)} removeArticle={() => removeArticle("d1")} editMode={editMode}/>
+                <CardMedium articleID={layout.d2} setArticle={(id) => loadArticle("d2", id)} removeArticle={() => removeArticle("d2")} editMode={editMode}/>
+                <CardMedium articleID={layout.d3} setArticle={(id) => loadArticle("d3", id)} removeArticle={() => removeArticle("d3")} editMode={editMode}/>
+                <CardMedium articleID={layout.d4} setArticle={(id) => loadArticle("d4", id)} removeArticle={() => removeArticle("d4")} editMode={editMode}/>
+                <CardMedium articleID={layout.e1} setArticle={(id) => loadArticle("e1", id)} removeArticle={() => removeArticle("e1")} editMode={editMode}/>
+                <CardMedium articleID={layout.e2} setArticle={(id) => loadArticle("e2", id)} removeArticle={() => removeArticle("e2")} editMode={editMode}/>
+            </section>
         </div>
     )
 }

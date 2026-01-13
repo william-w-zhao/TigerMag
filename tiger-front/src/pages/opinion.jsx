@@ -59,15 +59,14 @@ const Opinion = () => {
             <section className="order-1 h-full lg:border-r lg:border-gray-200 lg:pr-4 bg-white">
                 <CardLarge articleID={layout.a1} setArticle={(id) => loadArticle("a1", id)} removeArticle={() => removeArticle("a1")} editMode={editMode}/>
             </section>
-            <section className="order-2 h-full flex flex-col divide-y divide-gray-200">
+            <section className="hidden lg:flex order-2 h-full flex-col divide-y divide-gray-200">
                 <CardMedium articleID={layout.b1} setArticle={(id) => loadArticle("b1", id)} removeArticle={() => removeArticle("b1")} editMode={editMode}/>
                 <CardMedium articleID={layout.b2} setArticle={(id) => loadArticle("b2", id)} removeArticle={() => removeArticle("b2")} editMode={editMode}/>
-                <CardMedium articleID={layout.b3} setArticle={(id) => loadArticle("b3", id)} removeArticle={() => removeArticle("b3")} editMode={editMode}/>
             </section>
             </div>
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mt-4 mb-2" />
             <hr className="h-[1.5px] w-full border-0 bg-[#DEDEDE] mb-8" />
-            <div className="max-w-[90%] mx-auto lg:max-w-[70%]">
+            <div className="max-w-full mx-auto lg:max-w-[70%]">
                 <ArticleDisplay section={"OPINION"}/>
             </div>
         </div>

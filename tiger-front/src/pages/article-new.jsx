@@ -1,5 +1,5 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import TextareaAutosize from "react-textarea-autosize";
 import { getStorage, ref, uploadBytes } from "firebase/storage"
@@ -11,10 +11,11 @@ const TEXTAREA_STYLE =
 
 const ArticleNew = () => {
   let [isPublishOpen, setIsPublishOpen] = useState(false)
+  const fileRef = useRef(null)
 
   const navigate = useNavigate()
   const storage = getStorage()
-  
+
   const [article, setArticle] = useState({
       section: "",
       title: "",
@@ -23,6 +24,19 @@ const ArticleNew = () => {
       content: ""
   });
   const [image, setImage] = useState(null)
+  const [previewURL, setPreviewURL] = useState(null)
+
+  useEffect(() => {
+    if (!image) {
+      setPreviewURL(null)
+      return
+    }
+
+    const url = URL.createObjectURL(image)
+    setPreviewURL(url)
+
+    return () => URL.revokeObjectURL(url)
+  }, [image])
 
   const onChangeField = (field) => (e) => {
     const value = e.target.value;
@@ -46,9 +60,15 @@ const ArticleNew = () => {
       setIsPublishOpen(false)
       navigate(`/articles/${id}`)
   }
+  
+  const clearImage = () => {
+      setImage(null)
+      setPreviewURL(null)
+      if (fileRef.current) fileRef.current.value = ""
+  }
 
   return (
-    <div className="max-w-[55%] mx-auto flex flex-col gap-2">
+    <div className="max-w-[90%] mx-auto lg:max-w-[55%] flex flex-col gap-2">
       <h1 className="text-5xl font-bold">New Article</h1>
       <hr className="text-gray-300 mb-2"/>
       <div className="flex justify-end">
@@ -82,13 +102,22 @@ const ArticleNew = () => {
         onChange={onChangeField("description")}
       />
 
-      <div className="TEXTAREA_STYLE">
-        <input 
-        type="file"
-        className=""
-        onChange={(event) => (setImage(event.target.files[0]))}>
-        </input>
-      </div>
+      {!image && (<div className={`${TEXTAREA_STYLE} relative`}>
+        <input
+          type="file"
+          ref={fileRef}
+          className="w-full file:mr-4 file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-l file:font hover:file:bg-gray-200"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+      </div>)}
+
+      
+      {image && (<div className = "max-w-full mx-auto my-2 relative lg:my-2">
+        <img src={previewURL} className="block mx-auto max-w-full h-auto rounded"/>
+        <button onClick={clearImage} className="absolute top-2 right-2 text-3xl z-20 text-red-500 hover:text-red-700 font-bold">
+                ×
+        </button>
+        </div>)}
 
       <div className="w-full flex items-center gap-2">
         <h2 className="text-lg">By</h2>
