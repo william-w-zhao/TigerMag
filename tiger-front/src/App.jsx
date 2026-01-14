@@ -39,6 +39,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/editor" element={<ProtectedRoute><EditorConsole/></ProtectedRoute>} />
+            <Route path="/upload" element={<ProtectedRoute><EditorConsole/></ProtectedRoute>} />
             <Route path="/articles/:id" element={<Article />} />
             <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
             <Route path="/article-new" element={<ProtectedRoute><ArticleNew /></ProtectedRoute>} />

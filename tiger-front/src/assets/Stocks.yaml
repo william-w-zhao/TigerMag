@@ -24,6 +24,11 @@ items:
     change: "+2"
 
   - id: 5
-    title: "Whitman Salmonella Rate"
-    value: "0.34%"
-    change: "-0.08%"
+    title: "Procrastinating PSETS"
+    value: "3,293"
+    change: "+429"
+
+  - id: 6
+    title: "Fristed Rate"
+    value: "2.4%"
+    change: "-0.7%"

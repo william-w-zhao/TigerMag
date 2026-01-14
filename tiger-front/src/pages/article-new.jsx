@@ -52,15 +52,16 @@ const ArticleNew = () => {
 
   const handleSubmit = async (article) => {
       if (!canSubmit) return;
-      if (image == null) return;
 
       const id = await newArticle(article)
-      const imageRef = ref(storage, `images/${id}`)
-      uploadBytes(imageRef, image)
+      if (image) {
+        const imageRef = ref(storage, `images/${id}`)
+        uploadBytes(imageRef, image)
+      }
       setIsPublishOpen(false)
       navigate(`/articles/${id}`)
   }
-  
+
   const clearImage = () => {
       setImage(null)
       setPreviewURL(null)
