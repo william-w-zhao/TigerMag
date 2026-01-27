@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: princeton-tiger-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: princeton-tiger
+  ports:
+    - port: 80
+      targetPort: 80

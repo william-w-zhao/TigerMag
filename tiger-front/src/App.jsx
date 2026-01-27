@@ -14,7 +14,7 @@ import Home from './pages/home';
 import HomeEdit from './pages/home-edit.jsx';
 import Login from './pages/login';
 import Masthead from './pages/masthead';
-import News from './pages/News';
+import News from './pages/news';
 import NewsEdit from './pages/news-edit.jsx';
 import Opinion from './pages/opinion';
 import OpinionEdit from './pages/opinion-edit.jsx';

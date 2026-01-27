@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: princeton-tiger
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: princeton-tiger
+  template:
+    metadata:
+      labels:
+        app: princeton-tiger
+    spec:
+      containers:
+        - name: web
+          image: 797679862387.dkr.ecr.us-east-2.amazonaws.com/the-princeton-tiger:4eae6f0
+          ports:
+            - containerPort: 80
