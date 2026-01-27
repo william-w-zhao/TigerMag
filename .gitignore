@@ -67,3 +67,15 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Node
+node_modules/
+
+# Build outputs
+dist/
+tiger-front/dist/
+
+# Env files
+.env
+.env.local
+
