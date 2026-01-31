@@ -77,7 +77,7 @@ const Article = () => {
       </div>}
       <div className="max-w-[90%] mx-auto lg:max-w-[55%] mb-4">
         <h2 className = "text-l text-gray-500 mb-2">By {article.author}</h2>
-        <p contentEditable="true" className = "text-xl whitespace-pre-wrap">{article.content}</p>
+        <p className = "text-xl whitespace-pre-wrap">{article.content}</p>
       </div>
     </div>
   );
