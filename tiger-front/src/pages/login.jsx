@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../services/supabaseClient";
 import { signIn } from "../services/auth";
+import { posthog } from "../services/posthog";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -48,9 +49,12 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      await signIn(email, password)
+      const data = await signIn(email, password);
+      posthog.identify(data.user.id, { email: data.user.email });
+      posthog.capture("user_logged_in");
       navigate(from, { replace: true });
     } catch (err) {
+      posthog.captureException(err);
       console.error(err);
       setErrorMessage(err.message || "Failed to log in.");
     } finally {

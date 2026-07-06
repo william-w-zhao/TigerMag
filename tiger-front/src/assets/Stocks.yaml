@@ -32,3 +32,8 @@ items:
     title: "Fristed Rate"
     value: "2.4%"
     change: "-0.7%"
+
+  - id: 7
+    title: "Illegal Streams on Eduroam"
+    value: "6,243,827"
+    change: "+213,539"

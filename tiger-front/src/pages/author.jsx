@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import Loading from "../components/Loading";
 import { getAuthorBySlug, getArticlesByAuthorID } from "../services/authors";
+import { posthog } from "../services/posthog";
 
 const Author = () => {
   const { slug } = useParams();
@@ -24,6 +25,7 @@ const Author = () => {
         if (!cancelled) {
           setAuthor(authorData);
           setArticles(articleData);
+          posthog.capture("author_profile_viewed", { author_id: authorData.id, slug: authorData.slug });
         }
       } catch (e) {
         if (!cancelled) {

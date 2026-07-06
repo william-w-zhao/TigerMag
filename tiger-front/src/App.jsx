@@ -3,8 +3,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer.jsx';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import PostHogPageView from "./components/PostHogPageView";
 import About from './pages/about';
-import Archive from './pages/archive.jsx';
+import Issues from "./pages/issues";
+import Issue from "./pages/issue";
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
 import ArticleNew from './pages/article-new';
@@ -12,17 +14,15 @@ import Author from "./pages/author";
 import Contact from './pages/contact';
 import EditorConsole from './pages/editor-console';
 import Home from './pages/home';
-import HomeEdit from './pages/home-edit.jsx';
 import Login from './pages/login';
 import Masthead from './pages/masthead';
 import News from './pages/news';
-import NewsEdit from './pages/news-edit.jsx';
 import Opinion from './pages/opinion';
-import OpinionEdit from './pages/opinion-edit.jsx';
 
 function App() {
   return (
     <BrowserRouter>
+      <PostHogPageView/>
       <div className="min-h-screen flex flex-col">
         <Navbar />
 
@@ -32,10 +32,11 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/home/edit" element={<ProtectedRoute><Home editMode={ true } /></ProtectedRoute>} />
             <Route path="/news" element={<News />} />
-            <Route path="/news/edit" element={<ProtectedRoute><NewsEdit/></ProtectedRoute>} />
+            <Route path="/news/edit" element={<ProtectedRoute><News editMode={ true }/></ProtectedRoute>} />
             <Route path="/opinion" element={<Opinion />} />
-            <Route path="/opinion/edit" element={<ProtectedRoute><OpinionEdit/></ProtectedRoute>} />
-            <Route path="/archive" element={<Archive />} />
+            <Route path="/opinion/edit" element={<ProtectedRoute><Opinion editMode={ true }/></ProtectedRoute>} />
+            <Route path="/issues" element={<Issues />} />
+            <Route path="/issues/:id" element={<Issue />} />
             <Route path="/masthead" element={<Masthead />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

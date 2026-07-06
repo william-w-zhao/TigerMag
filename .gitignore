@@ -45,3 +45,4 @@ bower_components
 
 # DataConnect generated
 .dataconnect
+.DS_Store
