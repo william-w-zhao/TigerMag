@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { fetchAllArticles, deleteArticle } from "../firebase/db"
+import { getArticles, deleteArticle } from "../services/articles";
 import Loading from "../components/Loading"
 
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
@@ -92,7 +92,7 @@ const ArticleList = () => {
     (async () => {
       try {
         setError("");
-        const data = await fetchAllArticles();
+        const data = await getArticles();
         if (!cancelled) setArticles(data);
       } catch (e) {
         if (!cancelled) setError(e?.message ?? "Failed to load article");

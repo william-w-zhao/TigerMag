@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebase/db";
-import { collection, getDocs } from "firebase/firestore";
+import { getArticles } from "../services/articles";
 
 const ArticleDropdownMenu = ({ value, onSelect }) => {
   const [articles, setArticles] = useState([]);
@@ -8,9 +7,8 @@ const ArticleDropdownMenu = ({ value, onSelect }) => {
   // On first rendering, get all the articles
   useEffect(() => {
     const loadArticles = async () => {
-      const data = await getDocs(collection(db, "articles"));
-      const docs = data.docs.map(doc => ({id: doc.id, ...doc.data()}))
-      setArticles(docs);
+      const data = await getArticles();
+      setArticles(data);
     };
 
     loadArticles();

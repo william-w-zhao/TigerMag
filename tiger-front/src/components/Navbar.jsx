@@ -27,8 +27,8 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-2"> 
             <img src={Tiger} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto hover:cursor-pointer" />
             <button className={NAV_BTN} onClick = {() => navigate('/news')}>News</button>
-            <button className={NAV_BTN} onClick = {() => navigate('/opinion')}>Opinion</button>
-            <button className={NAV_BTN} onClick = {() => navigate('/archive')}>Archive</button>
+            { /* <button className={NAV_BTN} onClick = {() => navigate('/opinion')}>Opinion</button> */ }
+            <button className={NAV_BTN} onClick = {() => navigate('/issues')}>Issues</button>
           </div>
            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <img src={TigerLogoText} alt="Logo" onClick = {() => navigate('/')} className="h-16 w-auto" />
@@ -49,8 +49,8 @@ const Navbar = () => {
         <div className={`lg:hidden overflow-hidden border-t border-gray-200 transition-all duration-300 ease-out ${open ? "max-h-96 opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-2 items-center"}`}>
           <div className="flex flex-col px-4 py-3 gap-4">
             <button className={NAV_BTN} onClick = {() => go('/news')}>News</button>
-            <button className={NAV_BTN} onClick = {() => go('/opinion')}>Opinion</button>
-            <button className={NAV_BTN} onClick = {() => go('/archive')}>Archive</button>
+            { /* <button className={NAV_BTN} onClick = {() => go('/opinion')}>Opinion</button> */ }
+            <button className={NAV_BTN} onClick = {() => go('/issues')}>Issues</button>
             <button className={NAV_BTN} onClick = {() => go('/masthead')}>Masthead</button>
             <button className={NAV_BTN} onClick = {() => go('/about')}>About</button>
             <button className={NAV_BTN} onClick = {() => go('/contact')}>Contact</button>

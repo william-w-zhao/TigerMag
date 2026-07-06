@@ -2,9 +2,10 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { Fragment, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import TextareaAutosize from "react-textarea-autosize";
-import { getStorage, ref, uploadBytes } from "firebase/storage"
-
-import { newArticle } from "../firebase/db"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase/firebaseconfig";
+import { saveArticle } from '../services/articles';
+import { posthog } from "../services/posthog";
 
 const TEXTAREA_STYLE =
   "outline outline-1 outline-gray-300 focus:outline-blue-300 focus:outline-2 w-full bg-transparent";
@@ -14,7 +15,6 @@ const ArticleNew = () => {
   const fileRef = useRef(null)
 
   const navigate = useNavigate()
-  const storage = getStorage()
 
   const [article, setArticle] = useState({
       section: "",
@@ -50,17 +50,45 @@ const ArticleNew = () => {
     article.author?.trim() &&
     article.content?.trim();
 
-  const handleSubmit = async (article) => {
-      if (!canSubmit) return;
+  const handleSubmit = async () => {
+    if (!canSubmit) return;
 
-      const id = await newArticle(article)
+    const id = crypto.randomUUID();
+
+    try {
+      let image_url = null;
+
       if (image) {
-        const imageRef = ref(storage, `images/${id}`)
-        uploadBytes(imageRef, image)
+        const imageRef = ref(storage, `images/${id}`);
+
+        await uploadBytes(imageRef, image, {
+          contentType: image.type,
+          cacheControl: "public, max-age=31536000",
+        });
+
+        image_url = await getDownloadURL(imageRef);
       }
-      setIsPublishOpen(false)
-      navigate(`/articles/${id}`)
-  }
+
+      await saveArticle({
+        id,
+        ...article,
+        image_url,
+      });
+
+      posthog.capture("article_published", {
+        article_id: id,
+        section: article.section,
+        has_image: !!image,
+      });
+
+      setIsPublishOpen(false);
+      navigate(`/articles/${id}`);
+    } catch (err) {
+      posthog.captureException(err);
+      console.error("Error publishing article:", err);
+      alert(err.message ?? "Failed to publish article.");
+    }
+  };
 
   const clearImage = () => {
       setImage(null)
@@ -184,7 +212,7 @@ const ArticleNew = () => {
                         Cancel
                       </button>
                       <button
-                        onClick={() => handleSubmit(article)}
+                        onClick={handleSubmit}
                         className="font-semibold text-green-400 hover:underline hover:cursor-pointer"
                       >
                         Publish!

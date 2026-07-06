@@ -2,7 +2,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom"
-import { logout } from "../firebase/auth";
+import { signOut } from "../services/auth";
+import { posthog } from "../services/posthog";
 
 import ArticleList from "../components/ArticleList"
 
@@ -11,7 +12,9 @@ const EditorConsole = () => {
 
     const handleLogout = async () => {
     try {
-        await logout();
+        posthog.capture("user_logged_out");
+        await signOut();
+        posthog.reset();
     } catch (err) {
         console.error("Logout failed:", err);
     }}
@@ -33,6 +36,7 @@ const EditorConsole = () => {
                 </button>
             </div>
         </div>
+        
     )
 }
 

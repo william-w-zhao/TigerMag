@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import Loading from "../components/Loading"
-import { fetchArticle, updateArticle } from "../firebase/db";
+import { getArticleByID, saveArticle } from "../services/articles";
 import { getStorage, ref, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage"
 
 const TEXTAREA_STYLE =
@@ -16,11 +16,9 @@ const ArticleEdit = () => {
   const [hasSaved, setHasSaved] = useState(true);
   const [saving, setSaving] = useState(false);
   const [image, setImage] = useState(null)
-  const [imageUrl, setImageUrl] = useState(null)
   const [previewURL, setPreviewURL] = useState(null)
   const [error, setError] = useState("");
   const [imageChange, setImageChange] = useState(false)
-  const [imagePath, setImagePath] = useState(null)
 
   const storage = getStorage()
   const fileRef = useRef(null)
@@ -32,7 +30,7 @@ const ArticleEdit = () => {
     (async () => {
       try {
         setError("");
-        const data = await fetchArticle(id);
+        const data = await getArticleByID(id);
         if (!cancelled) setArticle(data);
       } catch (e) {
         if (!cancelled) setError(e?.message ?? "Failed to load article");
@@ -43,42 +41,6 @@ const ArticleEdit = () => {
       cancelled = true;
     };
   }, [id]);
-
-  // Check if there is an image already associated with the article and set ImageUrl if there is
-  useEffect(() => {
-      let cancelled = false;
-  
-      const options = [
-        `images/${id}`,
-        `images/${id}.jpg`,
-        `images/${id}.png`,
-        `images/${id}.jpeg`
-      ];
-  
-      (async () => {
-        for (const option of options) {
-        try {
-        const url = await getDownloadURL(ref(storage, option))
-        console.log("Got download URL:", url);
-        if (!cancelled) {
-          setImagePath(option);
-          setImageUrl(url);
-        }
-        return
-        }
-        catch (e) {
-          if (e?.code === "storage/object-not-found") continue
-          else break
-        }}
-  
-      if (!cancelled) {
-        setImageUrl(null);
-        setImagePath(null)
-      }})();
-      return () => {
-        cancelled = true;
-      };
-    }, [id, storage])
 
   // Run to set a preview if the image has been cleared
   useEffect(() => {
@@ -100,48 +62,71 @@ const ArticleEdit = () => {
   };
 
   const clearImage = async () => {
-      setImage(null);
-      setImageUrl(null);
-      setPreviewURL(null);
-      setImageChange(true);
-      setHasSaved(false);
-      if (fileRef.current) fileRef.current.value = "";
-  }
+    setImage(null);
+    setPreviewURL(null);
+    setImageChange(true);
+    setHasSaved(false);
+
+    setArticle((prev) => ({
+      ...(prev ?? {}),
+      image_url: null,
+    }));
+    if (fileRef.current) fileRef.current.value = "";
+  };
 
   const handleSave = async () => {
     if (!id || !article) return;
 
     setSaving(true);
     setError("");
-    try {
-      await updateArticle(id, article);
-      if (imageChange) {
-        if (imagePath && !image) {
-          await deleteObject(ref(storage, imagePath));
-          setImagePath(null);
-          setImageUrl(null);
-        }
-        if (image) {
-          const path = imagePath ?? `images/${id}`; // keep old path if it exists
-          const imageRef = ref(storage, path);
 
-          await uploadBytes(imageRef, image);
+    try {
+      let nextArticle = { ...article };
+
+      if (imageChange) {
+        // If user selected a new image, upload it and store the new URL.
+        if (image) {
+          const imageRef = ref(storage, `images/${id}`);
+
+          await uploadBytes(imageRef, image, {
+            contentType: image.type,
+            cacheControl: "public, max-age=31536000",
+          });
+
           const url = await getDownloadURL(imageRef);
 
-          setImagePath(path);
-          setImageUrl(url);
+          nextArticle = {
+            ...nextArticle,
+            image_url: url,
+          };
+
+          setArticle(nextArticle);
           setImage(null);
           setPreviewURL(null);
         }
-        setImageChange(false)
+
+        if (!image && !nextArticle.image_url) {
+          try {
+            await deleteObject(ref(storage, `images/${id}`));
+          } catch (e) {
+            if (e?.code !== "storage/object-not-found") {
+              console.error("Failed to delete Firebase image:", e);
+            }
+          }
+        }
+      setImageChange(false);
       }
+
+      await saveArticle({
+        id,
+        ...nextArticle,
+      });
+
+      setHasSaved(true);
     } catch (e) {
       setError(e?.message ?? "Save failed");
     } finally {
       setSaving(false);
-    }
-    if (hasSaved == false){
-          setHasSaved(true)
     }
   };
 
@@ -184,15 +169,24 @@ const ArticleEdit = () => {
       />
 
       {/* The original image */}
-      {imageUrl && !imageChange && (<div className = "max-w-full mx-auto my-2 relative lg:my-2">
-          <img src={imageUrl} className="block mx-auto max-w-full h-auto rounded"/>
-          <button onClick={clearImage} className="absolute top-2 right-2 text-3xl z-20 text-red-500 hover:text-red-700 font-bold">
-              ×
+      {article.image_url && !imageChange && (
+        <div className="max-w-full mx-auto my-2 relative lg:my-2">
+          <img
+            src={article.image_url}
+            alt={article.title}
+            className="block mx-auto max-w-full h-auto rounded"
+          />
+          <button
+            onClick={clearImage}
+            className="absolute top-2 right-2 text-3xl z-20 text-red-500 hover:text-red-700 font-bold"
+          >
+            ×
           </button>
-          </div>)}
+        </div>
+      )}
 
       {/* Select a new image image */}
-      {!image && (imageChange || !imageUrl) && (<div className={`${TEXTAREA_STYLE} relative`}>
+      {!image && (imageChange || !article.image_url) && (<div className={`${TEXTAREA_STYLE} relative`}>
         <input
           type="file"
           ref={fileRef}
