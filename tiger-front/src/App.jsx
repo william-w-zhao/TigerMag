@@ -8,6 +8,7 @@ import Archive from './pages/archive.jsx';
 import Article from './pages/article';
 import ArticleEdit from './pages/article-edit';
 import ArticleNew from './pages/article-new';
+import Author from "./pages/author";
 import Contact from './pages/contact';
 import EditorConsole from './pages/editor-console';
 import Home from './pages/home';
@@ -29,7 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/home/edit" element={<ProtectedRoute><HomeEdit/></ProtectedRoute>} />
+            <Route path="/home/edit" element={<ProtectedRoute><Home editMode={ true } /></ProtectedRoute>} />
             <Route path="/news" element={<News />} />
             <Route path="/news/edit" element={<ProtectedRoute><NewsEdit/></ProtectedRoute>} />
             <Route path="/opinion" element={<Opinion />} />
@@ -43,6 +44,7 @@ function App() {
             <Route path="/articles/:id" element={<Article />} />
             <Route path="/articles/:id/:edit" element={<ProtectedRoute><ArticleEdit /></ProtectedRoute>} />
             <Route path="/article-new" element={<ProtectedRoute><ArticleNew /></ProtectedRoute>} />
+            <Route path="/authors/:slug" element={<Author />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>

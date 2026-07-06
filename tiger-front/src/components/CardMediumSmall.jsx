@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchArticle } from "../firebase/db";
+import { getArticleByID } from "../services/articles";
+
 import { Link } from "react-router-dom";
 import { getStorage, ref, getDownloadURL } from "firebase/storage"
 import ArticleDropdownMenu from "./ArticleDropdownMenu";
@@ -19,7 +20,7 @@ const CardMediumSmall = ({articleID, setArticle, removeArticle, editMode, classN
       }
       // Fetch the article data from the given article ID
       const loadArticle = async () => {
-        const data = await fetchArticle(articleID)
+        const data = await getArticleByID(articleID)
         getArticle(data)
       }
 

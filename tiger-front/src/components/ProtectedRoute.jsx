@@ -1,77 +1,128 @@
 import { useLocation, Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { db } from "../firebase/db";
-import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { auth } from "../firebase/auth";
+import { useEffect, useRef, useState } from "react";
+import { supabase } from "../services/supabaseClient";
+import { getEditor } from "../services/whitelist";
 import Loading from "./Loading";
 
 const ProtectedRoute = ({ children }) => {
-  // Set the user
   const [user, setUser] = useState(null);
-  // Checks if there is a user logged-in
   const [authLoading, setAuthLoading] = useState(true);
-  // Checks if the whitelist is currently loading
   const [checking, setChecking] = useState(false);
-  // Checks if the whitelist has been fully loaded
   const [checked, setChecked] = useState(false);
-  // Set the whitelist
-  const [allowed, setAllowed] = useState(false)
+  const [allowed, setAllowed] = useState(false);
 
-  const location = useLocation()
+  const lastUserIDRef = useRef(null);
+  const location = useLocation();
 
-  // On first rendering, set the user
   useEffect(() => {
-    const userChange = onAuthStateChanged(auth, (u) => {
-      setUser(u)
-      setAuthLoading(false)
+    let cancelled = false;
+
+    async function loadUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (cancelled) return;
+
+      setUser(user);
+      lastUserIDRef.current = user?.id ?? null;
+      setAuthLoading(false);
+    }
+
+    loadUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      const nextUser = session?.user ?? null;
+      const nextUserID = nextUser?.id ?? null;
+
+      setUser(nextUser);
+      setAuthLoading(false);
+
+      // Only reset the editor check if the actual user changed.
+      if (nextUserID !== lastUserIDRef.current) {
+        lastUserIDRef.current = nextUserID;
+        setChecked(false);
+        setAllowed(false);
+      }
     });
-    return userChange
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  // Every time user changes, run this to check the whitelist
   useEffect(() => {
-    const checkUser = async () => {
-      // If there is no user, return
+    let cancelled = false;
+
+    async function checkUser() {
       if (!user) {
-        setChecked(false)
-        setAllowed(false)
+        setChecked(true);
+        setAllowed(false);
         return;
       }
-      
-      setChecking(true)
+
+      setChecking(true);
+
       try {
-        const email = (user.email ?? "").trim().toLowerCase();
-        if (!email) {
-          setAllowed(false);
-          return;
-        }
-        const snap = await getDoc(doc(db, "whitelist", email));
-        setAllowed(snap.exists());
-        } catch (e) {
-          console.error("Failed to load whitelist:", e?.code, e?.message, e);
-        } finally {
-          setChecking(false);
+        const editor = await getEditor();
+
+        if (!cancelled) {
+          setAllowed(!!editor);
           setChecked(true);
         }
+      } catch (e) {
+        console.error("Failed to load editor whitelist:", e?.message, e);
+
+        if (!cancelled) {
+          setAllowed(false);
+          setChecked(true);
+        }
+      } finally {
+        if (!cancelled) {
+          setChecking(false);
+        }
+      }
     }
-    checkUser()
-  }, [user])
 
-  // If the user is loading, redirect to the loading screen
-  if (authLoading) return <div style={{ padding: 24 }}><Loading/></div>
+    if (!checked) {
+      checkUser();
+    }
 
-  // If there is no user, redirect to the login page
-  if (!user) return <Navigate to="/login" state={{ from: location }} replace />
+    return () => {
+      cancelled = true;
+    };
+  }, [user, checked]);
 
-  // If the whitelist is still loading, redirect to loading screen
-  if (checking || !checked) return <div style={{ padding: 24 }}><Loading/></div>
+  if (authLoading) {
+    return (
+      <div style={{ padding: 24 }}>
+        <Loading />
+      </div>
+    );
+  }
 
-  // If the user is not allowed, redirect to the no-access page
-  if (!allowed) return <Navigate to="/no-access" replace />
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-  // Else, return to the given, previous page
-  return children
-}
+  // Only show full-page loading before the first completed editor check.
+  // Do not replace children during later background checks.
+  if (!checked) {
+    return (
+      <div style={{ padding: 24 }}>
+        <Loading />
+      </div>
+    );
+  }
 
-export default ProtectedRoute
+  if (!allowed) {
+    return <Navigate to="/no-access" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;

@@ -1,8 +1,8 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { saveArticle } from "../services/articles";
 import { useState } from 'react'
 
 import LogoutButton from "../components/LogoutButton";
-import { db } from "../firebase/db";
 
 const Upload = () => {
     const [title, setTitle] = useState('')
@@ -22,15 +22,18 @@ const Upload = () => {
 
         // Add this document to the collection titles 'articles'
         try {
-            const docRef = await addDoc(collection(db, "articles"), {
+            
+            const articleId = crypto.randomUUID();
+
+            const savedArticle = await saveArticle({
+                id: articleId,
                 title,
                 description,
                 author,
                 content,
                 section,
                 image,
-                createdAt: serverTimestamp(),
-            })
+            });
         
             // Clear the textarea forms
             setTitle("")
@@ -39,10 +42,10 @@ const Upload = () => {
             setContent("")
             setSection("")
             setImage("")
-            setStatus(`Saved! id: ${docRef.id}`)}
+            setStatus(`Saved! id: ${articleId.id}`)}
         
         catch (err) { // else print the error that occured
-            console.error("Firestore addDoc failed:", err);
+            console.error("Failed to save doc to Supabase:", err);
             setStatus(err?.message || "Could not save")}
     }
 
