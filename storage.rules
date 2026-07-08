@@ -2,13 +2,13 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
 
-    function signedIn() {
-      return request.auth != null && request.auth.token.email != null;
-    }
-
+    // "allowed" is set as a custom claim when the backend mints the Firebase
+    // custom token (see functions/index.js: mintFirebaseToken), based on the
+    // Supabase editor_whitelist table. There is no Firebase Auth sign-in
+    // outside that flow, so this is the single source of truth for who can
+    // write here — it does not depend on Firestore at all anymore.
     function isAllowed() {
-      return signedIn()
-        && firestore.exists(/databases/(default)/documents/whitelist/$(request.auth.token.email));
+      return request.auth != null && request.auth.token.allowed == true;
     }
 
     match /images/{allPaths=**} {
