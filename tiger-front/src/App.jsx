@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { initFirebaseAuthBridge } from './firebase/authBridge';
 import Footer from './components/Footer.jsx';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -20,6 +22,8 @@ import News from './pages/news';
 import Opinion from './pages/opinion';
 
 function App() {
+  useEffect(() => initFirebaseAuthBridge(), []);
+
   return (
     <BrowserRouter>
       <PostHogPageView/>
